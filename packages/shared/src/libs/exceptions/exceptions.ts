@@ -1,2 +1,2 @@
 export { HttpError } from './http-error/http-error.exception.js';
-export { InvalidCredentialsError } from './invalid-credentials-error/invalid-credentials-error.exception.js';
+export { ValidationError } from './validation-error/validation-error.exception.js';
