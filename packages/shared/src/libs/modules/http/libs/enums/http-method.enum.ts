@@ -1,8 +1,8 @@
 const HTTPMethod = {
+  DELETE: 'DELETE',
   GET: 'GET',
   POST: 'POST',
-  PUT: 'PUT',
-  DELETE: 'DELETE'
+  PUT: 'PUT'
 } as const;
 
 export { HTTPMethod };

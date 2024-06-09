@@ -7,24 +7,13 @@ import {
 } from '../../../user/user.js';
 
 const signUp = Joi.object({
-  [UserPayloadKey.USERNAME]: Joi.string()
-    .trim()
-    .min(UserValidationRule.USERNAME_MIN_LENGTH)
-    .max(UserValidationRule.USERNAME_MAX_LENGTH)
-    .required()
-    .messages({
-      'string.empty': UserValidationMessage.USERNAME_REQUIRE,
-      'any.required': UserValidationMessage.USERNAME_REQUIRE,
-      'string.min': UserValidationMessage.USERNAME_MIN_LENGTH,
-      'string.max': UserValidationMessage.USERNAME_MAX_LENGTH
-    }),
   [UserPayloadKey.EMAIL]: Joi.string()
     .trim()
     .email({ tlds: { allow: false } })
     .required()
     .messages({
-      'string.email': UserValidationMessage.EMAIL_WRONG,
       'any.required': UserValidationMessage.EMAIL_REQUIRE,
+      'string.email': UserValidationMessage.EMAIL_WRONG,
       'string.empty': UserValidationMessage.EMAIL_REQUIRE
     }),
   [UserPayloadKey.PASSWORD]: Joi.string()
@@ -33,10 +22,21 @@ const signUp = Joi.object({
     .max(UserValidationRule.PASSWORD_MAX_LENGTH)
     .required()
     .messages({
-      'string.empty': UserValidationMessage.PASSWORD_REQUIRE,
       'any.required': UserValidationMessage.PASSWORD_REQUIRE,
-      'string.min': UserValidationMessage.PASSWORD_MIN_LENGTH,
-      'string.max': UserValidationMessage.PASSWORD_MAX_LENGTH
+      'string.empty': UserValidationMessage.PASSWORD_REQUIRE,
+      'string.max': UserValidationMessage.PASSWORD_MAX_LENGTH,
+      'string.min': UserValidationMessage.PASSWORD_MIN_LENGTH
+    }),
+  [UserPayloadKey.USERNAME]: Joi.string()
+    .trim()
+    .min(UserValidationRule.USERNAME_MIN_LENGTH)
+    .max(UserValidationRule.USERNAME_MAX_LENGTH)
+    .required()
+    .messages({
+      'any.required': UserValidationMessage.USERNAME_REQUIRE,
+      'string.empty': UserValidationMessage.USERNAME_REQUIRE,
+      'string.max': UserValidationMessage.USERNAME_MAX_LENGTH,
+      'string.min': UserValidationMessage.USERNAME_MIN_LENGTH
     })
 });
 

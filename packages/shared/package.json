@@ -7,7 +7,7 @@
   },
   "type": "module",
   "main": "build/index.js",
-  "types": "src/index.d.ts",
+  "types": "build/index.d.ts",
   "scripts": {
     "postinstall": "npm run build",
     "lint:type": "npx tsc --noEmit",
@@ -16,7 +16,6 @@
     "build": "tsc && tsc-alias"
   },
   "dependencies": {
-    "dayjs": "1.11.10",
     "joi": "17.11.0"
   }
 }

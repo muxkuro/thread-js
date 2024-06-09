@@ -7,8 +7,8 @@ const DEFAULT_MESSAGE = 'Network Error';
 
 type Constructor = {
   cause?: unknown;
-  status: ValueOf<typeof HTTPCode>;
   message: string;
+  status: ValueOf<typeof HTTPCode>;
 };
 
 class HTTPError extends Error {
@@ -16,8 +16,8 @@ class HTTPError extends Error {
 
   public constructor({
     cause,
-    status = HTTPCode.INTERNAL_SERVER_ERROR,
-    message = DEFAULT_MESSAGE
+    message = DEFAULT_MESSAGE,
+    status = HTTPCode.INTERNAL_SERVER_ERROR
   }: Partial<Constructor> = {}) {
     super(message, { cause });
     this.status = status;

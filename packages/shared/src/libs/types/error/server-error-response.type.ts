@@ -3,9 +3,9 @@ import { type ServerErrorType } from '~/libs/enums/enums.js';
 import { type ServerErrorDetail } from './server-error-detail.type.js';
 
 type ServerValidationErrorResponse = {
+  details: ServerErrorDetail[];
   errorType: typeof ServerErrorType.VALIDATION;
   message: string;
-  details: ServerErrorDetail[];
 };
 
 type ServerCommonErrorResponse = {
@@ -13,10 +13,9 @@ type ServerCommonErrorResponse = {
   message: string;
 };
 
-
 type ServerErrorResponse =
-  | ServerValidationErrorResponse
-  | ServerCommonErrorResponse;
+  | ServerCommonErrorResponse
+  | ServerValidationErrorResponse;
 
 export {
   type ServerCommonErrorResponse,
