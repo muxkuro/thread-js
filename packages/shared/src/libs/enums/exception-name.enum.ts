@@ -1,5 +1,5 @@
 const ExceptionName = {
-  HTTP_ERROR: 'HttpError',
+  HTTP_ERROR: 'HTTPError',
   INVALID_CREDENTIALS: 'InvalidCredentials'
 } as const;
 

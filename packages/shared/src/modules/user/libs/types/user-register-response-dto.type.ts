@@ -1,5 +1,5 @@
 import { User } from './user.type.js';
 
-type UserRegisterResponseDto = User;
+type UserSignUpResponseDto = User;
 
-export { type UserRegisterResponseDto };
+export { type UserSignUpResponseDto };

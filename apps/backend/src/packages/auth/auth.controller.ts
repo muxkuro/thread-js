@@ -3,20 +3,19 @@ import {
   Controller,
   ControllerAPIHandler,
   ControllerAPIHandlerOptions,
-  ControllerAPIHandlerResponse,
-  ControllerHook
+  ControllerAPIHandlerResponse
 } from '~/libs/modules/controller/controller.js';
 import { HTTPCode, HTTPMethod } from '~/libs/modules/http/http.js';
 import { type ValueOf } from '~/libs/types/types.js';
 
 import { AuthApiPath } from './libs/enums/enums.js';
 import {
-  UserRegisterResponseDto,
+  UserSignUpResponseDto,
   type AuthController,
   type AuthService,
-  type UserRegisterRequestDto
+  type UserSignUpRequestDto
 } from './libs/types/types.js';
-import { registrationValidationSchema } from './libs/validation-schemas/validation-schemas.js';
+import { signUpValidationSchema } from './libs/validation-schemas/validation-schemas.js';
 import { LoggerModule } from '~/libs/modules/logger/logger.js';
 
 type Constructor = {
@@ -34,9 +33,9 @@ class Auth extends Controller implements AuthController {
 
     this.addRoute({
       method: HTTPMethod.POST,
-      url: AuthApiPath.REGISTER,
+      url: AuthApiPath.SIGN_UP,
       schema: {
-        body: registrationValidationSchema
+        body: signUpValidationSchema
       },
       handler: this.register as ControllerAPIHandler
     });
@@ -44,9 +43,9 @@ class Auth extends Controller implements AuthController {
 
   public register = async (
     options: ControllerAPIHandlerOptions<{
-      body: UserRegisterRequestDto;
+      body: UserSignUpRequestDto;
     }>
-  ): Promise<ControllerAPIHandlerResponse<UserRegisterResponseDto>> => {
+  ): Promise<ControllerAPIHandlerResponse<UserSignUpResponseDto>> => {
     return {
       payload: await this.#authService.register(options.body),
       status: HTTPCode.CREATED

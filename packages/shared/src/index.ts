@@ -5,7 +5,7 @@ export {
   ExceptionName,
   ServerErrorType
 } from './libs/enums/enums.js';
-export { HttpError, ValidationError } from './libs/exceptions/exceptions.js';
+export { HTTPError, ValidationError } from './libs/exceptions/exceptions.js';
 export { type Configurable } from './libs/modules/config/config.js';
 export { HTTPCode, HttpHeader, HTTPMethod } from './libs/modules/http/http.js';
 export {
@@ -15,12 +15,12 @@ export {
   type ServerErrorResponse,
   type ServerValidationErrorResponse
 } from './libs/types/types.js';
-export { AuthApiPath, registration } from './modules/auth/auth.js';
+export { AuthApiPath, signUp } from './modules/auth/auth.js';
 export {
   UserPayloadKey,
   UserValidationMessage,
   UserValidationRule,
   type User,
-  type UserRegisterRequestDto,
-  type UserRegisterResponseDto
+  type UserSignUpRequestDto,
+  type UserSignUpResponseDto
 } from './modules/user/user.js';

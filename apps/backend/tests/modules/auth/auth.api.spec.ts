@@ -8,8 +8,8 @@ import { HTTPCode, HTTPMethod } from '~/libs/modules/http/http.js';
 import { joinPath } from '~/libs/modules/path/path.js';
 import {
   AuthApiPath,
-  type UserRegisterRequestDto,
-  type UserRegisterResponseDto
+  type UserSignUpRequestDto,
+  type UserSignUpResponseDto
 } from '~/packages/auth/auth.js';
 import {
   UserPayloadKey,
@@ -31,7 +31,7 @@ const registerEndpoint = joinPath([
   config.ENV.APP.API_PATH,
   API_V1_VERSION_PREFIX,
   APIPath.AUTH,
-  AuthApiPath.REGISTER
+  AuthApiPath.SIGN_UP
 ]);
 
 describe(`${authApiPath} routes`, () => {
@@ -91,7 +91,7 @@ describe(`${authApiPath} routes`, () => {
     it(`should return ${HTTPCode.UNPROCESSED_ENTITY} of empty ${UserPayloadKey.EMAIL} validation error`, async () => {
       const [validTestUser] = TEST_USERS_CREDENTIALS;
       const { [UserPayloadKey.EMAIL]: _email, ...user } =
-        validTestUser as UserRegisterRequestDto;
+        validTestUser as UserSignUpRequestDto;
 
       const response = await app.inject().post(registerEndpoint).body(user);
 
@@ -121,7 +121,7 @@ describe(`${authApiPath} routes`, () => {
     it(`should return ${HTTPCode.UNPROCESSED_ENTITY} of empty ${UserPayloadKey.PASSWORD} validation error`, async () => {
       const [validTestUser] = TEST_USERS_CREDENTIALS;
       const { [UserPayloadKey.PASSWORD]: _password, ...user } =
-        validTestUser as UserRegisterRequestDto;
+        validTestUser as UserSignUpRequestDto;
 
       const response = await app.inject().post(registerEndpoint).body(user);
 
@@ -170,9 +170,7 @@ describe(`${authApiPath} routes`, () => {
     });
 
     it(`should return ${HTTPCode.CREATED} and create a new user`, async () => {
-      const [validTestUser] = TEST_USERS_CREDENTIALS as [
-        UserRegisterRequestDto
-      ];
+      const [validTestUser] = TEST_USERS_CREDENTIALS as [UserSignUpRequestDto];
 
       const response = await app
         .inject()
@@ -189,7 +187,7 @@ describe(`${authApiPath} routes`, () => {
 
       const savedDatabaseUser = await select({
         table: DatabaseTableName.USERS,
-        condition: { id: response.json<UserRegisterResponseDto>().id },
+        condition: { id: response.json<UserSignUpResponseDto>().id },
         limit: KNEX_SELECT_ONE_RECORD
       });
 

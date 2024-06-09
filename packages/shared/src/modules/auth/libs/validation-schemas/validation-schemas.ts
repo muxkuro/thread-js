@@ -1,1 +1,1 @@
-export { registration } from './registration.validation-schema.js';
+export { signUp } from './sign-up.validation-schema.js';

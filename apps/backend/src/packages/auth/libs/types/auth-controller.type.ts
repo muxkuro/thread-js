@@ -1,8 +1,8 @@
 import { type FastifyReply, type FastifyRequest } from 'fastify';
 
 import {
-  type UserRegisterResponseDto,
-  type UserRegisterRequestDto
+  type UserSignUpResponseDto,
+  type UserSignUpRequestDto
 } from './types.js';
 import {
   ControllerAPIHandlerOptions,
@@ -12,9 +12,9 @@ import {
 type AuthController = {
   register: (
     options: ControllerAPIHandlerOptions<{
-      body: UserRegisterRequestDto;
+      body: UserSignUpRequestDto;
     }>
-  ) => Promise<ControllerAPIHandlerResponse<UserRegisterResponseDto>>;
+  ) => Promise<ControllerAPIHandlerResponse<UserSignUpResponseDto>>;
 };
 
 export { type AuthController };

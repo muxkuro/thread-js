@@ -19,6 +19,6 @@ export { encryptSync } from './helpers/helpers.js';
 export { AuthApiPath } from './libs/enums/enums.js';
 export {
   type AuthService,
-  type UserRegisterRequestDto,
-  type UserRegisterResponseDto
+  type UserSignUpRequestDto,
+  type UserSignUpResponseDto
 } from './libs/types/types.js';
