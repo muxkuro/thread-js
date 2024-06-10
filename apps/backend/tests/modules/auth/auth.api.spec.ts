@@ -17,13 +17,14 @@ import {
   UserValidationRule
 } from '~/packages/user/user.js';
 
+import { API_V1_VERSION_PREFIX } from '../../libs/constants/constants.js';
 import { buildApp } from '../../libs/modules/app/app.js';
 import {
-  getCrudHandlers,
-  KNEX_SELECT_ONE_RECORD
+  KNEX_SELECT_ONE_RECORD,
+  getCrudHandlers
 } from '../../libs/modules/database/database.js';
+import { VALIDATION_RULE_DELTA } from '../../libs/modules/database/libs/constants/constants.js';
 import { TEST_USERS_CREDENTIALS } from '../user/user.js';
-import { API_V1_VERSION_PREFIX } from '../../libs/constants/constants.js';
 
 const authApiPath = joinPath([config.ENV.APP.API_PATH, APIPath.AUTH]);
 
@@ -43,7 +44,7 @@ describe(`${authApiPath} routes`, () => {
 
     it(`should return ${HTTPCode.UNPROCESSED_ENTITY} of empty ${UserPayloadKey.USERNAME} validation error`, async () => {
       const response = await app.inject().post(registerEndpoint).body({});
-      console.log('response', response);
+
       expect(response.statusCode).toBe(HTTPCode.UNPROCESSED_ENTITY);
       expect(response.json<Record<'message', string>>().message).toBe(
         `${UserValidationMessage.USERNAME_REQUIRE}. ${UserValidationMessage.EMAIL_REQUIRE}. ${UserValidationMessage.PASSWORD_REQUIRE}`
@@ -59,7 +60,7 @@ describe(`${authApiPath} routes`, () => {
         .body({
           ...validTestUser,
           [UserPayloadKey.USERNAME]: faker.string.alpha(
-            UserValidationRule.USERNAME_MIN_LENGTH - 1
+            UserValidationRule.USERNAME_MIN_LENGTH - VALIDATION_RULE_DELTA
           )
         });
 
@@ -78,7 +79,7 @@ describe(`${authApiPath} routes`, () => {
         .body({
           ...validTestUser,
           [UserPayloadKey.USERNAME]: faker.string.alpha(
-            UserValidationRule.USERNAME_MAX_LENGTH + 2
+            UserValidationRule.USERNAME_MAX_LENGTH + VALIDATION_RULE_DELTA
           )
         });
 
@@ -140,7 +141,8 @@ describe(`${authApiPath} routes`, () => {
         .body({
           ...validTestUser,
           [UserPayloadKey.PASSWORD]: faker.internet.password({
-            length: UserValidationRule.PASSWORD_MIN_LENGTH - 2
+            length:
+              UserValidationRule.PASSWORD_MIN_LENGTH - VALIDATION_RULE_DELTA
           })
         });
 
@@ -159,7 +161,8 @@ describe(`${authApiPath} routes`, () => {
         .body({
           ...validTestUser,
           [UserPayloadKey.PASSWORD]: faker.internet.password({
-            length: UserValidationRule.PASSWORD_MAX_LENGTH + 2
+            length:
+              UserValidationRule.PASSWORD_MAX_LENGTH + VALIDATION_RULE_DELTA
           })
         });
 
@@ -180,21 +183,21 @@ describe(`${authApiPath} routes`, () => {
       expect(response.statusCode).toBe(HTTPCode.CREATED);
       expect(response.json()).toEqual(
         expect.objectContaining({
-          [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME],
-          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL]
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
+          [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME]
         })
       );
 
       const savedDatabaseUser = await select({
-        table: DatabaseTableName.USERS,
         condition: { id: response.json<UserSignUpResponseDto>().id },
-        limit: KNEX_SELECT_ONE_RECORD
+        limit: KNEX_SELECT_ONE_RECORD,
+        table: DatabaseTableName.USERS
       });
 
       expect(savedDatabaseUser).toEqual(
         expect.objectContaining({
-          [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME],
-          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL]
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
+          [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME]
         })
       );
     });

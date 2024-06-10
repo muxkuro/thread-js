@@ -1,5 +1,5 @@
 export {
   HTTPCode,
-  HttpHeader,
-  HTTPMethod
+  HTTPMethod,
+  HttpHeader
 } from '@thread-js/shared';

@@ -20,8 +20,8 @@ const setupTestUsers = async ({
   );
 
   await insert({
-    table: DatabaseTableName.USERS,
-    data: usersToInsert
+    data: usersToInsert,
+    table: DatabaseTableName.USERS
   });
 };
 

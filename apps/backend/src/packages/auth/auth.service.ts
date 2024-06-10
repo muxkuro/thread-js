@@ -1,8 +1,8 @@
 import { type UserRepository } from '../user/user.js';
 import {
-  type UserSignUpResponseDto,
   type AuthService,
-  type UserSignUpRequestDto
+  type UserSignUpRequestDto,
+  type UserSignUpResponseDto
 } from './libs/types/types.js';
 
 type Constructor = {
@@ -12,15 +12,15 @@ type Constructor = {
 class Auth implements AuthService {
   #userRepository: UserRepository;
 
-  public constructor({ userRepository }: Constructor) {
-    this.#userRepository = userRepository;
-  }
-
   public register = async (
     userRequestDto: UserSignUpRequestDto
   ): Promise<UserSignUpResponseDto> => {
-    return this.#userRepository.create(userRequestDto);
+    return await this.#userRepository.create(userRequestDto);
   };
+
+  public constructor({ userRepository }: Constructor) {
+    this.#userRepository = userRepository;
+  }
 }
 
 export { Auth };

@@ -1,5 +1,6 @@
 import { type FastifyError } from 'fastify';
-import { ValidationError } from '~/libs/exceptions/exceptions.js';
+
+import { type ValidationError } from '~/libs/exceptions/exceptions.js';
 
 type APIError = FastifyError | ValidationError;
 

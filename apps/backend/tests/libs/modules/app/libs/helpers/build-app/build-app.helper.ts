@@ -20,13 +20,13 @@ type BuildApp = () => {
 
 const buildApp: BuildApp = () => {
   const serverApp = new ServerApp({
+    apis: [serverAppApiV1],
     config,
+    database,
     logger,
     options: {
       logger: true
-    },
-    apis: [serverAppApiV1],
-    database
+    }
   });
 
   beforeAll(async () => {

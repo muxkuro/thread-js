@@ -6,11 +6,11 @@ import {
 class User extends AbstractModel {
   public email!: string;
 
-  public username!: string;
+  public imageId!: null | number;
 
   public password!: string;
 
-  public imageId!: number | null;
+  public username!: string;
 
   public static get tableName(): typeof DatabaseTableName.USERS {
     return DatabaseTableName.USERS;

@@ -1,13 +1,12 @@
-import { type FastifyReply, type FastifyRequest } from 'fastify';
+import {
+  type ControllerAPIHandlerOptions,
+  type ControllerAPIHandlerResponse
+} from '~/libs/modules/controller/controller.js';
 
 import {
-  type UserSignUpResponseDto,
-  type UserSignUpRequestDto
+  type UserSignUpRequestDto,
+  type UserSignUpResponseDto
 } from './types.js';
-import {
-  ControllerAPIHandlerOptions,
-  ControllerAPIHandlerResponse
-} from '~/libs/modules/controller/controller.js';
 
 type AuthController = {
   register: (

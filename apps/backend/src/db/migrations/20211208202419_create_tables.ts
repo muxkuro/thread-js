@@ -13,8 +13,8 @@ const ColumnName = {
   USERNAME: 'username'
 } as const;
 
-export async function up(knex: Knex): Promise<void> {
-  await knex.schema.createTable(TableName.USERS, table => {
+const up = async (knex: Knex): Promise<void> => {
+  await knex.schema.createTable(TableName.USERS, (table) => {
     table.increments(ColumnName.ID).primary();
     table.string(ColumnName.EMAIL).notNullable().unique();
     table.string(ColumnName.USERNAME).notNullable().unique();
@@ -28,7 +28,10 @@ export async function up(knex: Knex): Promise<void> {
       .notNullable()
       .defaultTo(knex.fn.now());
   });
-}
-export async function down(knex: Knex): Promise<void> {
+};
+
+const down = async (knex: Knex): Promise<void> => {
   await knex.schema.dropTableIfExists(TableName.USERS);
-}
+};
+
+export { down, up };

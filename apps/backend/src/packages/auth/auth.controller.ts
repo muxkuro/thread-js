@@ -1,22 +1,22 @@
 import { type APIPath } from '~/libs/enums/enums.js';
 import {
   Controller,
-  ControllerAPIHandler,
-  ControllerAPIHandlerOptions,
-  ControllerAPIHandlerResponse
+  type ControllerAPIHandler,
+  type ControllerAPIHandlerOptions,
+  type ControllerAPIHandlerResponse
 } from '~/libs/modules/controller/controller.js';
 import { HTTPCode, HTTPMethod } from '~/libs/modules/http/http.js';
+import { type LoggerModule } from '~/libs/modules/logger/logger.js';
 import { type ValueOf } from '~/libs/types/types.js';
 
 import { AuthApiPath } from './libs/enums/enums.js';
 import {
-  UserSignUpResponseDto,
   type AuthController,
   type AuthService,
-  type UserSignUpRequestDto
+  type UserSignUpRequestDto,
+  type UserSignUpResponseDto
 } from './libs/types/types.js';
 import { signUpValidationSchema } from './libs/validation-schemas/validation-schemas.js';
-import { LoggerModule } from '~/libs/modules/logger/logger.js';
 
 type Constructor = {
   apiPath: ValueOf<typeof APIPath>;
@@ -26,20 +26,6 @@ type Constructor = {
 
 class Auth extends Controller implements AuthController {
   #authService: AuthService;
-
-  public constructor({ apiPath, authService, logger }: Constructor) {
-    super({ apiPath, logger });
-    this.#authService = authService;
-
-    this.addRoute({
-      method: HTTPMethod.POST,
-      url: AuthApiPath.SIGN_UP,
-      schema: {
-        body: signUpValidationSchema
-      },
-      handler: this.register as ControllerAPIHandler
-    });
-  }
 
   public register = async (
     options: ControllerAPIHandlerOptions<{
@@ -51,6 +37,20 @@ class Auth extends Controller implements AuthController {
       status: HTTPCode.CREATED
     };
   };
+
+  public constructor({ apiPath, authService, logger }: Constructor) {
+    super({ apiPath, logger });
+    this.#authService = authService;
+
+    this.addRoute({
+      handler: this.register as ControllerAPIHandler,
+      method: HTTPMethod.POST,
+      schema: {
+        body: signUpValidationSchema
+      },
+      url: AuthApiPath.SIGN_UP
+    });
+  }
 }
 
 export { Auth };

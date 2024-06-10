@@ -1,14 +1,14 @@
 const ControllerHook = {
-  ON_REQUEST: 'onRequest',
-  PRE_PARSING: 'preParsing',
-  PRE_VALIDATION: 'preValidation',
-  PRE_HANDLER: 'preHandler',
   HANDLER: 'handler',
-  PRE_SERIALIZATION: 'preSerialization',
   ON_ERROR: 'onError',
-  ON_SEND: 'onSend',
+  ON_REQUEST: 'onRequest',
   ON_RESPONSE: 'onResponse',
-  ON_TIMEOUT: 'onTimeout'
+  ON_SEND: 'onSend',
+  ON_TIMEOUT: 'onTimeout',
+  PRE_HANDLER: 'preHandler',
+  PRE_PARSING: 'preParsing',
+  PRE_SERIALIZATION: 'preSerialization',
+  PRE_VALIDATION: 'preValidation'
 } as const;
 
 export { ControllerHook };

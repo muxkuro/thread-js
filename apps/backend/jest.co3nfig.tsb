@@ -6,11 +6,13 @@ import tsconfigJson from './tsconfig.json' assert { type: 'json' };
 
 const sourcePath = join(fileURLToPath(import.meta.url), '../');
 
-const manageKey = key => {
+const manageKey = (key: string) => {
   return key.includes('(.*)') ? key.slice(0, -1) + '\\.js$' : key;
 };
 
-const manageMapper = mapper => ({
+const manageMapper = (
+  mapper: Record<string, string | string[]>
+): Record<string, string | string[]> => ({
   ...Object.fromEntries(
     Object.entries(mapper).map(([key, value]) => [manageKey(key), value])
   ),
@@ -21,15 +23,24 @@ export default {
   extensionsToTreatAsEsm: ['.ts'],
   moduleNameMapper: manageMapper(
     pathsToModuleNameMapper(tsconfigJson.compilerOptions.paths, {
-      prefix: sourcePath
-    })
+      prefix: '<rootDir>/'
+    }) as Record<string, string | string[]>
   ),
+  modulePaths: ['<rootDir>'],
   preset: 'ts-jest/presets/default-esm',
+  setupFilesAfterEnv: ['<rootDir>/tests/helpers/app-setup/app-setup.helper.ts'],
   testEnvironment: 'jest-environment-node',
-  testPathIgnorePatterns: ['node_modules/', 'dist/', 'build/'],
+  testMatch: ['<rootDir>/tests/test-cases/**/*.test.ts'],
+  testPathIgnorePatterns: ['node_modules/', 'dist/'],
   testTimeout: 10_000,
   transform: {
-    '^.+\\.tsx?$': ['ts-jest', { useESM: true }]
+    '^.+\\.tsx?$': [
+      'ts-jest',
+      {
+        isolatedModules: true,
+        useESM: true
+      }
+    ]
   },
   transformIgnorePatterns: ['node_modules/'],
   workerIdleMemoryLimit: '1GB'

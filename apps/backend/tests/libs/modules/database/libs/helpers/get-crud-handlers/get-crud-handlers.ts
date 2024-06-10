@@ -15,8 +15,8 @@ const NO_RECORDS = 0;
 
 const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
   const remove = <T extends Record<string, unknown>>({
-    table,
-    condition
+    condition,
+    table
   }: RemoveParameters<T>): Promise<Record<string, unknown>[]> => {
     const knex = getKnex();
 
@@ -26,10 +26,10 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
   };
 
   const update = <T extends Record<string, unknown>>({
-    table,
     condition,
     data,
-    returning = ['*']
+    returning = ['*'],
+    table
   }: UpdateParameters<T>): Promise<T[]> => {
     const knex = getKnex();
 
@@ -42,14 +42,14 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
     T extends Record<string, unknown>,
     K extends Record<string, unknown>
   >({
-    table,
-    condition = {},
-    conditionRaw,
-    conditionNot = {},
     columns = [],
+    condition = {},
+    conditionNot = {},
+    conditionRaw,
+    joins = [],
     limit,
     offset,
-    joins = []
+    table
   }: SelectParameters<T, K>): Promise<T | T[]> => {
     const knex = getKnex();
 
@@ -65,7 +65,7 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
         return scope.whereRaw(`${conditionKey} = ?`, [value]);
       })
       .modify(scope => {
-        if (Object.keys(conditionNot).length === 0) {
+        if (Object.keys(conditionNot).length === NO_RECORDS) {
           return scope;
         }
 
@@ -86,16 +86,17 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
         return scope.offset(offset);
       })
       .modify(scope => {
-        if (!columns || columns.length === 0) {
+        if (columns.length === NO_RECORDS) {
           return scope.select(['*']);
         }
 
         return scope.select(columns);
       })
       .modify(scope => {
-        if (joins.length > 0) {
+        if (joins.length > NO_RECORDS) {
           return scope;
         }
+
         for (const index of joins) {
           const [foreignTable, foreignKey, onTable] = index;
           void scope.join(foreignTable, foreignKey, onTable);
@@ -104,7 +105,7 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
         return scope;
       })) as T[];
 
-    if (!result || result.length === 0) {
+    if (result.length === NO_RECORDS) {
       throw new Error(`Nothing in ${table} was found`);
     }
 
@@ -112,13 +113,13 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
       return result[FIRST_ARRAY_ELEMENT_IDX] as T;
     }
 
-    return result as T[];
+    return result;
   };
 
   const insert = <T extends Record<string, unknown>, K extends T>({
-    table,
     data,
-    returning = []
+    returning = [],
+    table
   }: InsertParameters<T>): Promise<K[]> => {
     const knex = getKnex();
 
@@ -127,7 +128,7 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
     return knex(table)
       .insert(toInsert)
       .modify(scope => {
-        if (!returning || returning.length === 0) {
+        if (returning.length === NO_RECORDS) {
           return scope.returning(['*']);
         }
 
@@ -139,21 +140,22 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
     T extends Record<string, unknown>,
     K extends Record<string, unknown>
   >({
-    table,
     condition = {},
     conditionNot = [],
-    joins
+    joins,
+    table
   }: CountParameters<T, K>): Promise<number> => {
     const knex = getKnex();
 
     const result: Record<'count', number>[] = await knex(table)
       .where({ ...condition })
       .modify(scope => {
-        if (conditionNot.length === 0) {
+        if (conditionNot.length > NO_RECORDS) {
           return scope;
         }
+
         for (const conditionKey of conditionNot) {
-          if (Object.keys(conditionKey).length > 0) {
+          if (Object.keys(conditionKey).length > NO_RECORDS) {
             void scope.whereNot({ ...conditionKey });
           }
         }
@@ -161,13 +163,13 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
         return scope;
       })
       .modify(scope => {
-        if (joins?.length) {
-          for (const index of joins) {
-            const [foreignTable, foreignKey, onTable] = index;
-            void scope.join(foreignTable, foreignKey, onTable);
-          }
-
+        if (!joins?.length) {
           return scope;
+        }
+
+        for (const index of joins) {
+          const [foreignTable, foreignKey, onTable] = index;
+          void scope.join(foreignTable, foreignKey, onTable);
         }
 
         return scope;
@@ -175,8 +177,8 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
       .count(`${table}.id`);
 
     return Number(
-      (result[FIRST_ARRAY_ELEMENT_IDX] as Record<'count', number>).count ??
-        NO_RECORDS
+      (result[FIRST_ARRAY_ELEMENT_IDX] as Record<'count', number | undefined>)
+        .count ?? NO_RECORDS
     );
   };
 
@@ -185,12 +187,12 @@ const getCrudHandlers: GetCrudHandlersFunction = getKnex => {
   ): Promise<T[]> => {
     const knex = getKnex();
 
-    const result = await knex.raw<Record<'rows', T[]>>(query);
+    const result = await knex.raw<Record<'rows', T[]> | undefined>(query);
 
     return result?.rows as T[];
   };
 
-  return { remove, update, select, insert, count, rawQuery };
+  return { count, insert, rawQuery, remove, select, update };
 };
 
 export { getCrudHandlers };

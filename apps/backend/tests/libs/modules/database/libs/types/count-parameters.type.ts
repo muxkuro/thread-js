@@ -5,10 +5,10 @@ type CountParameters<
   T extends Record<string, unknown>,
   K extends Record<string, unknown>
 > = {
-  table: ValueOf<typeof DatabaseTableName>;
   condition?: Partial<T>;
   conditionNot?: K[];
   joins?: [ValueOf<typeof DatabaseTableName>, string, string][];
+  table: ValueOf<typeof DatabaseTableName>;
 };
 
 export { type CountParameters };

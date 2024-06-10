@@ -1,9 +1,10 @@
-import { ServerApplicationRouteParameters } from '~/libs/modules/server-application/libs/types/types.js';
-import { ControllerRouteParameters } from './controller-route-parameters.type.js';
+import { type ServerApplicationRouteParameters } from '~/libs/modules/server-application/libs/types/types.js';
+
+import { type ControllerRouteParameters } from './controller-route-parameters.type.js';
 
 type ControllerModule = {
-  routes: ServerApplicationRouteParameters[];
   addRoute(options: ControllerRouteParameters): void;
+  routes: ServerApplicationRouteParameters[];
 };
 
 export { type ControllerModule };

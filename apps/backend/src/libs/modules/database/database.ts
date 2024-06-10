@@ -1,7 +1,6 @@
-import { config } from '~/libs/modules/config/config.js';
-
-import { Database } from './database.module.js';
+import { config } from '../config/config.js';
 import { logger } from '../logger/logger.js';
+import { Database } from './database.module.js';
 
 const database = new Database({ config, logger });
 

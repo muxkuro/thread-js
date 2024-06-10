@@ -1,12 +1,13 @@
 import { joinPath } from '~/libs/modules/path/path.js';
+
+import { type LoggerModule } from '../logger/logger.js';
+import { type ServerApplicationRouteParameters } from '../server-application/server-application.js';
 import {
-  ControllerAPIHandler,
-  ControllerAPIHandlerOptions,
-  ControllerModule,
-  ControllerRouteParameters
+  type ControllerAPIHandler,
+  type ControllerAPIHandlerOptions,
+  type ControllerModule,
+  type ControllerRouteParameters
 } from './libs/types/types.js';
-import { LoggerModule } from '../logger/logger.js';
-import { ServerApplicationRouteParameters } from '../server-application/server-application.js';
 
 type Constructor = {
   apiPath: string;
@@ -16,17 +17,13 @@ type Constructor = {
 class Controller implements ControllerModule {
   #apiPath: string;
 
-  #routes: ServerApplicationRouteParameters[] = [];
-
   #logger: LoggerModule;
 
-  public constructor({ logger, apiPath }: Constructor) {
+  #routes: ServerApplicationRouteParameters[] = [];
+
+  public constructor({ apiPath, logger }: Constructor) {
     this.#logger = logger;
     this.#apiPath = apiPath;
-  }
-
-  public get routes(): ServerApplicationRouteParameters[] {
-    return this.#routes;
   }
 
   private async mapHandler(
@@ -62,6 +59,10 @@ class Controller implements ControllerModule {
       handler: (request, reply) => this.mapHandler(handler, request, reply),
       url: joinPath([this.#apiPath, url])
     });
+  }
+
+  public get routes(): ServerApplicationRouteParameters[] {
+    return this.#routes;
   }
 }
 

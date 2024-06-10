@@ -5,28 +5,28 @@ const hash = (password: string): string => encryptSync(password);
 const usersSeed = [
   {
     email: 'demo@demo.com',
-    username: 'demo',
-    password: hash('demo')
+    password: hash('demo'),
+    username: 'demo'
   },
   {
     email: 'gbottoms1@arizona.edu',
-    username: 'jhon',
-    password: hash('pxlxvUyyUjE')
+    password: hash('pxlxvUyyUjE'),
+    username: 'jhon'
   },
   {
     email: 'cclears2@state.gov',
-    username: 'alex',
-    password: hash('ioyLdS9Mdgj')
+    password: hash('ioyLdS9Mdgj'),
+    username: 'alex'
   },
   {
     email: 'htie3@chronoengine.com',
-    username: 'kivi',
-    password: hash('twn50kl')
+    password: hash('twn50kl'),
+    username: 'kivi'
   },
   {
     email: 'bbirmingham4@guardian.co.uk',
-    username: 'avocado',
-    password: hash('0naQBpP9')
+    password: hash('0naQBpP9'),
+    username: 'avocado'
   }
 ];
 

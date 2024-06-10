@@ -4,21 +4,21 @@ import { type ValueOf } from '~/libs/types/types.js';
 type EnvironmentSchema = {
   APP: {
     API_PATH: string;
-    PORT: number;
-    HOST: string;
     ENVIRONMENT: ValueOf<typeof AppEnvironment>;
+    HOST: string;
+    PORT: number;
   };
   DB: {
+    CLIENT: string;
     DATABASE: string;
+    DEBUG: boolean;
+    HOST: string;
+    PASSWORD: string;
+    POOL_MAX: number;
+    POOL_MIN: number;
+    PORT: number;
     TEST_DATABASE: string;
     USERNAME: string;
-    PASSWORD: string;
-    HOST: string;
-    PORT: number;
-    POOL_MIN: number;
-    POOL_MAX: number;
-    CLIENT: string;
-    DEBUG: boolean;
   };
 };
 

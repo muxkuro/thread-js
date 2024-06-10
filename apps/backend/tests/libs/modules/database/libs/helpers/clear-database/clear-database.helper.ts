@@ -4,7 +4,7 @@ import { type GetCrudHandlersFunction } from '../../types/types.js';
 import { getCrudHandlers } from '../get-crud-handlers/get-crud-handlers.js';
 
 const clearDatabase = async (
-  getKnex: Parameters<GetCrudHandlersFunction>[0]
+  getKnex: Parameters<GetCrudHandlersFunction>[number]
 ): Promise<void> => {
   const { remove } = getCrudHandlers(getKnex);
 

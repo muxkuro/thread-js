@@ -1,12 +1,12 @@
 import LibraryKnex from 'knex';
-import { knexSnakeCaseMappers, Model } from 'objection';
+import { Model, knexSnakeCaseMappers } from 'objection';
 
 import { AppEnvironment } from '~/libs/enums/enums.js';
 import { type ValueOf } from '~/libs/types/types.js';
 
 import { type ConfigModule } from '../config/config.js';
+import { type LoggerModule } from '../logger/logger.js';
 import { type DatabaseModule } from './libs/types/types.js';
-import { LoggerModule } from '../logger/logger.js';
 
 type Constructor = {
   config: ConfigModule;
@@ -16,9 +16,9 @@ type Constructor = {
 class Database implements DatabaseModule {
   #config: ConfigModule;
 
-  #logger: LoggerModule;
-
   #knex!: LibraryKnex.Knex;
+
+  #logger: LoggerModule;
 
   public constructor({ config, logger }: Constructor) {
     this.#config = config;
@@ -34,6 +34,10 @@ class Database implements DatabaseModule {
     this.#logger.info('DB connection established successfully!');
 
     Model.knex(this.#knex);
+  }
+
+  public get environmentConfig(): LibraryKnex.Knex.Config {
+    return this.environmentsConfig[this.#config.ENV.APP.ENVIRONMENT];
   }
 
   public get environmentsConfig(): Record<
@@ -56,30 +60,27 @@ class Database implements DatabaseModule {
     };
   }
 
-  public get knex(): LibraryKnex.Knex {
-    return this.#knex;
-  }
-
   public get initialConfig(): LibraryKnex.Knex.Config {
     const {
-      DATABASE: database,
-      USERNAME: username,
-      PASSWORD: password,
-      HOST: host,
-      PORT: port,
       CLIENT: client,
-      DEBUG: debug
+      DATABASE: database,
+      DEBUG: debug,
+      HOST: host,
+      PASSWORD: password,
+      PORT: port,
+      USERNAME: username
     } = this.#config.ENV.DB;
 
     return {
       client,
       connection: {
-        user: username,
-        port,
-        host,
         database,
-        password
+        host,
+        password,
+        port,
+        user: username
       },
+      debug,
       migrations: {
         directory: './src/db/migrations',
         tableName: 'knex_migrations'
@@ -87,13 +88,12 @@ class Database implements DatabaseModule {
       seeds: {
         directory: './src/db/seeds'
       },
-      debug,
       ...knexSnakeCaseMappers({ underscoreBetweenUppercaseLetters: true })
     };
   }
 
-  public get environmentConfig(): LibraryKnex.Knex.Config {
-    return this.environmentsConfig[this.#config.ENV.APP.ENVIRONMENT];
+  public get knex(): LibraryKnex.Knex {
+    return this.#knex;
   }
 }
 

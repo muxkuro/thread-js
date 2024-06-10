@@ -5,15 +5,15 @@ type SelectParameters<
   T extends Record<string, unknown>,
   K extends Record<string, unknown>
 > = {
-  table: ValueOf<typeof DatabaseTableName>;
+  columns?: string[];
   condition?: Partial<T> | undefined;
   conditionNot?: Partial<K> | undefined;
-  conditionRaw?: [string, string | number] | undefined;
-  columns?: string[];
+  conditionRaw?: [string, number | string] | undefined;
+  joins?: [ValueOf<typeof DatabaseTableName>, string, string][];
   limit?: number;
   offset?: number;
-  joins?: [ValueOf<typeof DatabaseTableName>, string, string][];
   shouldThrowErrorOnEmptyResult?: boolean;
+  table: ValueOf<typeof DatabaseTableName>;
 };
 
 export { type SelectParameters };

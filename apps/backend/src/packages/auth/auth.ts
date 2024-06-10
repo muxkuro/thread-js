@@ -1,9 +1,9 @@
 import { APIPath } from '~/libs/enums/enums.js';
+import { logger } from '~/libs/modules/logger/logger.js';
 import { userRepository } from '~/packages/user/user.js';
 
 import { Auth as AuthController } from './auth.controller.js';
 import { Auth as AuthService } from './auth.service.js';
-import { logger } from '~/libs/modules/logger/logger.js';
 
 const authService = new AuthService({
   userRepository
