@@ -1,16 +1,12 @@
-import { Button, Input, Message } from '~/libs/components/components.js';
+import { Button, Input, NavLink } from '~/libs/components/components.js';
 import { AppRoute, ButtonColor } from '~/libs/enums/enums.js';
 import { useAppForm } from '~/libs/hooks/hooks.js';
-
 import { UserPayloadKey } from '~/modules/user/user.js';
 
 import { DEFAULT_SIGN_IN_PAYLOAD } from './libs/common/constants.js';
 import styles from './styles.module.scss';
-import { NavLink } from '~/libs/components/components.js';
 
-type Properties = {};
-
-const SignInForm: React.FC<Properties> = () => {
+const SignInForm: React.FC = () => {
   const { control, errors } = useAppForm({
     defaultValues: DEFAULT_SIGN_IN_PAYLOAD
   });
@@ -21,20 +17,20 @@ const SignInForm: React.FC<Properties> = () => {
       <form name="loginForm">
         <fieldset className={styles['fieldset']}>
           <Input
-            name={UserPayloadKey.EMAIL}
-            type="email"
-            placeholder="Email"
             control={control}
             errors={errors}
+            name={UserPayloadKey.EMAIL}
+            placeholder="Email"
+            type="email"
           />
           <Input
-            name={UserPayloadKey.PASSWORD}
-            type="password"
-            placeholder="Password"
             control={control}
             errors={errors}
+            name={UserPayloadKey.PASSWORD}
+            placeholder="Password"
+            type="password"
           />
-          <Button type="submit" color={ButtonColor.TEAL} isFluid isPrimary>
+          <Button color={ButtonColor.TEAL} isFluid isPrimary type="submit">
             Sign In
           </Button>
         </fieldset>

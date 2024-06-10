@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-magic-numbers */
 import js from '@eslint/js';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
@@ -38,7 +39,6 @@ const jsConfig = {
   },
   rules: {
     ...js.configs.recommended.rules,
-    'arrow-parens': ['error', 'always'],
     curly: ['error', 'all'],
     eqeqeq: ['error', 'always'],
     'max-params': ['error', JS_MAX_PARAMS_ALLOWED],
@@ -65,7 +65,7 @@ const jsConfig = {
       },
       {
         message:
-          "TAvoid import/export type { Type } from './module'. Prefer import/export { type Type } from './module'.",
+          'TAvoid import/export type { Type } from "./module". Prefer import/export { type Type } from "./module".',
         selector:
           'ImportDeclaration[importKind=type],ExportNamedDeclaration[exportKind=type]'
       }
@@ -87,7 +87,8 @@ const importConfig = {
     'import/extensions': [
       'error',
       {
-        js: 'always'
+        js: 'always',
+        json: 'always'
       }
     ],
     'import/newline-after-import': ['error'],
@@ -109,7 +110,10 @@ const sonarConfig = {
   plugins: {
     sonarjs
   },
-  rules: sonarjs.configs.recommended.rules
+  rules: {
+    ...sonarjs.configs.recommended.rules,
+    'sonarjs/cognitive-complexity': ['error', 16]
+  }
 };
 
 /** @type {FlatConfig} */
@@ -136,7 +140,11 @@ const typescriptConfig = {
   languageOptions: {
     parser: /** @type {ParserModule} */ (tsParser),
     parserOptions: {
-      project: './tsconfig.json'
+      project: [
+        './tsconfig.json',
+        './packages/**/tsconfig.json',
+        './apps/**/tsconfig.json'
+      ]
     }
   },
   plugins: {
@@ -164,6 +172,16 @@ const typescriptConfig = {
         ignoreEnums: true,
         ignoreReadonlyClassProperties: true
       }
+    ],
+    '@typescript-eslint/no-misused-promises': [
+      'error',
+      {
+        'checksVoidReturn': false
+      }
+    ],
+    '@typescript-eslint/no-unused-vars': [
+      'error',
+      { 'argsIgnorePattern': '^_', 'ignoreRestSiblings': true }
     ],
     '@typescript-eslint/padding-line-between-statements': [
       'error',

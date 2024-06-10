@@ -8,32 +8,31 @@ import {
 } from 'react-hook-form';
 
 import { useController } from '~/libs/hooks/hooks.js';
-import { type ValueOf } from '~/libs/types/types.js';
 
 import styles from './styles.module.scss';
 
 type InputProperties<T extends FieldValues> = {
-  name: FieldPath<T>;
-  control: Control<T>;
-  errors?: object;
-  disabled?: boolean;
-  placeholder: string;
   className?: string;
-  type?: 'email' | 'password' | 'submit' | 'text';
+  control: Control<T>;
+  disabled?: boolean;
+  errors?: object;
+  name: FieldPath<T>;
+  placeholder: string;
   rows?: number;
+  type?: 'email' | 'password' | 'submit' | 'text';
 };
 
 const Input = <T extends FieldValues>({
-  name,
+  className,
   control,
-  type = 'text',
-  rows = 0,
-  errors = {},
   disabled,
+  errors = {},
+  name,
   placeholder,
-  className
+  rows,
+  type = 'text'
 }: InputProperties<T>): ReactElement => {
-  const { field } = useController<T>({ name, control });
+  const { field } = useController<T>({ control, name });
   const isTextarea = Boolean(rows);
 
   return (
@@ -42,18 +41,18 @@ const Input = <T extends FieldValues>({
         {isTextarea ? (
           <textarea
             {...field}
-            name={name}
-            rows={rows}
-            placeholder={placeholder}
             className={clsx(styles['textArea'], className)}
+            name={name}
+            placeholder={placeholder}
+            rows={rows}
           />
         ) : (
           <input
             {...field}
-            type={type}
+            className={clsx(styles['input'], className)}
             disabled={disabled}
             placeholder={placeholder}
-            className={clsx(styles['input'], className)}
+            type={type}
           />
         )}
       </div>

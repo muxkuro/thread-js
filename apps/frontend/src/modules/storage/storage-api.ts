@@ -14,16 +14,18 @@ class Storage implements StorageApi {
     this.#storage = storage;
   }
 
-  public set(key: ValueOf<typeof StorageKey>, value: string): void {
-    this.#storage.setItem(key as string, value);
-  }
+  public clear(): Promise<void> {
+    this.#storage.clear();
 
-  public get<R = string>(key: ValueOf<typeof StorageKey>): R | null {
-    return this.#storage.getItem(key as string) as R;
+    return Promise.resolve();
   }
 
   public drop(key: ValueOf<typeof StorageKey>): void {
     this.#storage.removeItem(key as string);
+  }
+
+  public get<R = string>(key: ValueOf<typeof StorageKey>): R | null {
+    return this.#storage.getItem(key as string) as R;
   }
 
   public has(key: ValueOf<typeof StorageKey>): boolean {
@@ -32,10 +34,8 @@ class Storage implements StorageApi {
     return Boolean(value);
   }
 
-  public clear(): Promise<void> {
-    this.#storage.clear();
-
-    return Promise.resolve();
+  public set(key: ValueOf<typeof StorageKey>, value: string): void {
+    this.#storage.setItem(key as string, value);
   }
 }
 

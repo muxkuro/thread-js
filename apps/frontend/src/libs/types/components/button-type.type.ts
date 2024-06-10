@@ -1,3 +1,3 @@
-type ButtonType = 'button' | 'submit' | 'reset';
+type ButtonType = 'button' | 'reset' | 'submit';
 
 export { type ButtonType };

@@ -1,8 +1,8 @@
 const NotificationType = {
-  INFO: 'info',
   ERROR: 'error',
-  WARNING: 'warning',
-  SUCCESS: 'success'
+  INFO: 'info',
+  SUCCESS: 'success',
+  WARNING: 'warning'
 } as const;
 
 export { NotificationType };

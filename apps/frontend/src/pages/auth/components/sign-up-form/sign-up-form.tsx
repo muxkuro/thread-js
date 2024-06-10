@@ -1,11 +1,6 @@
-import {
-  Button,
-  Input,
-  Message,
-  NavLink
-} from '~/libs/components/components.js';
+import { Button, Input, NavLink } from '~/libs/components/components.js';
 import { AppRoute, ButtonColor, DataStatus } from '~/libs/enums/enums.js';
-import { useAppForm, useAppSelector, useState } from '~/libs/hooks/hooks.js';
+import { useAppForm, useAppSelector } from '~/libs/hooks/hooks.js';
 import { type UserSignUpRequestDto } from '~/modules/auth/auth.js';
 import { signUp as signUpValidationSchema } from '~/modules/auth/libs/validation-schemas/validation-schemas.js';
 import { UserPayloadKey } from '~/modules/user/enums/enums.js';
@@ -38,34 +33,34 @@ const SignUpForm: React.FC<Properties> = ({ onSubmit }) => {
     <>
       <h2 className={styles['title']}>Register for free account</h2>
       <form name="registrationForm" onSubmit={handleSubmit(handleFormSubmit)}>
-        <fieldset disabled={isLoading} className={styles['fieldset']}>
+        <fieldset className={styles['fieldset']} disabled={isLoading}>
           <Input
+            control={control}
+            errors={errors}
             name={UserPayloadKey.USERNAME}
-            type="text"
             placeholder="Username"
-            control={control}
-            errors={errors}
+            type="text"
           />
           <Input
+            control={control}
+            errors={errors}
             name={UserPayloadKey.EMAIL}
-            type="email"
             placeholder="Email"
-            control={control}
-            errors={errors}
+            type="email"
           />
           <Input
-            name={UserPayloadKey.PASSWORD}
-            type="password"
-            placeholder="Password"
             control={control}
             errors={errors}
+            name={UserPayloadKey.PASSWORD}
+            placeholder="Password"
+            type="password"
           />
           <Button
-            type="submit"
             color={ButtonColor.TEAL}
-            isLoading={isLoading}
             isFluid
+            isLoading={isLoading}
             isPrimary
+            type="submit"
           >
             Sign Up
           </Button>

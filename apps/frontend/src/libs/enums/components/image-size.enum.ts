@@ -1,7 +1,7 @@
 const ImageSize = {
-  SMALL: 'small',
+  LARGE: 'large',
   MEDIUM: 'medium',
-  LARGE: 'large'
+  SMALL: 'small'
 } as const;
 
 export { ImageSize };

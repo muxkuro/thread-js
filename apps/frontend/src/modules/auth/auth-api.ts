@@ -28,9 +28,9 @@ class Auth implements AuthApi {
     return this.#httpApi.load(
       `${this.#apiPath}${APIPath.AUTH}${AuthApiPath.SIGN_UP}`,
       {
-        method: HTTPMethod.POST,
         contentType: ContentType.JSON,
         hasAuth: false,
+        method: HTTPMethod.POST,
         payload: JSON.stringify(payload)
       }
     );

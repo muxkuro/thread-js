@@ -3,7 +3,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import { AppEnvironment } from '~/libs/enums/enums.js';
 import { type ConfigModule } from '~/libs/packages/config/config.js';
 import { authApi, authReducer } from '~/modules/auth/auth.js';
-
 import { storageApi } from '~/modules/storage/storage.js';
 
 import {
@@ -15,22 +14,18 @@ import {
 class Store implements StorePackage {
   #instance: StoreInstance;
 
-  public get instance(): StoreInstance {
-    return this.#instance;
-  }
-
   public constructor(config: ConfigModule) {
     this.#instance = configureStore({
       devTools: config.ENV.APP.ENVIRONMENT !== AppEnvironment.PRODUCTION,
-      reducer: {
-        auth: authReducer
-      },
       middleware: getDefaultMiddleware => {
         return getDefaultMiddleware({
           thunk: {
             extraArgument: this.extraArguments
           }
         });
+      },
+      reducer: {
+        auth: authReducer
       }
     });
   }
@@ -40,6 +35,10 @@ class Store implements StorePackage {
       authApi,
       storageApi
     };
+  }
+
+  public get instance(): StoreInstance {
+    return this.#instance;
   }
 }
 

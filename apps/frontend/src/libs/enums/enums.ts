@@ -1,4 +1,4 @@
-export { AppRoute, ENV, StorageKey, DataStatus } from './app/app.js';
+export { AppRoute, DataStatus, ENV, StorageKey } from './app/app.js';
 export { ButtonColor, ButtonSize, ImageSize } from './components/components.js';
 export { ExceptionMessage, ServerErrorType } from './exception/exception.js';
 export { ContentType } from './file/file.js';

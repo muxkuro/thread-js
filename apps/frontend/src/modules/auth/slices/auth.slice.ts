@@ -1,25 +1,22 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
 
+import { DataStatus } from '~/libs/enums/enums.js';
+import { type ValueOf } from '~/libs/types/types.js';
 import { type UserSignUpResponseDto } from '~/modules/auth/auth.js';
 
 import { signUp } from './actions.js';
-import { DataStatus } from '~/libs/enums/enums.js';
-import { ValueOf } from '~/libs/types/types.js';
 
 type State = {
-  user: UserSignUpResponseDto | null;
   dataStatus: ValueOf<typeof DataStatus>;
+  user: UserSignUpResponseDto | null;
 };
 
 const initialState: State = {
-  user: null,
-  dataStatus: DataStatus.IDLE
+  dataStatus: DataStatus.IDLE,
+  user: null
 };
 
-const { reducer, actions, name } = createSlice({
-  initialState,
-  name: 'auth',
-  reducers: {},
+const { actions, name, reducer } = createSlice({
   extraReducers(builder) {
     builder
       .addMatcher(isAnyOf(signUp.pending), state => {
@@ -33,7 +30,10 @@ const { reducer, actions, name } = createSlice({
         state.user = null;
         state.dataStatus = DataStatus.REJECTED;
       });
-  }
+  },
+  initialState,
+  name: 'auth',
+  reducers: {}
 });
 
 export { actions, name, reducer };

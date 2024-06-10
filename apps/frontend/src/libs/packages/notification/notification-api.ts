@@ -10,16 +10,16 @@ class Notification implements NotificationApi {
     toast.error(message);
   };
 
+  public [NotificationType.INFO] = (message = DEFAULT_MESSAGE): void => {
+    toast.info(message);
+  };
+
   public [NotificationType.SUCCESS] = (message = DEFAULT_MESSAGE): void => {
     toast.success(message);
   };
 
   public [NotificationType.WARNING] = (message = DEFAULT_MESSAGE): void => {
     toast.warn(message);
-  };
-
-  public [NotificationType.INFO] = (message = DEFAULT_MESSAGE): void => {
-    toast.info(message);
   };
 }
 

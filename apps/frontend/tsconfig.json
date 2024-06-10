@@ -1,13 +1,9 @@
 {
   "extends": "../../tsconfig.json",
-  "include": ["src", "vite.config.ts", "index.d.ts"],
-  "exclude": ["node_modules"],
+  "include": ["**/*.ts", "**/*.js", "**/*.tsx"],
+  "exclude": ["node_modules", "build"],
+  "files": ["packages.d.ts"],
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
     "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "jsx": "react-jsx",
     "baseUrl": ".",

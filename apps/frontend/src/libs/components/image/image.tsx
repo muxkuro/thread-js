@@ -7,26 +7,27 @@ import styles from './styles.module.scss';
 
 type ImageProperties = {
   alt: string;
-  isCentered?: boolean;
-  isCircular?: boolean;
   className?: string;
   height?: string;
+  isCentered?: boolean;
+  isCircular?: boolean;
   size?: ValueOf<typeof ImageSize>;
-  width?: string;
   src: string;
+  width?: string;
 };
 
 const Image: React.FC<ImageProperties> = ({
   alt,
-  isCentered,
-  isCircular,
   className,
   height,
+  isCentered,
+  isCircular,
   size,
   src,
   width
 }) => (
   <img
+    alt={alt}
     className={clsx(
       styles['image'],
       isCircular && styles['circular'],
@@ -34,10 +35,9 @@ const Image: React.FC<ImageProperties> = ({
       size && styles[`imageSize__${size}`],
       className
     )}
-    width={width}
     height={height}
     src={src}
-    alt={alt}
+    width={width}
   />
 );
 

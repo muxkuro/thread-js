@@ -1,6 +1,6 @@
 const ButtonColor = {
-  TEAL: 'teal',
-  BLUE: 'blue'
+  BLUE: 'blue',
+  TEAL: 'teal'
 } as const;
 
 export { ButtonColor };

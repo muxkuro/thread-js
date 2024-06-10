@@ -7,5 +7,5 @@ const httpApi = new HttpApi({
 });
 
 export { httpApi };
-export { type HttpApi, type HttpOptions } from './libs/types/types.js';
 export { HTTPError } from './libs/exceptions/exceptions.js';
+export { type HttpApi, type HttpOptions } from './libs/types/types.js';

@@ -4,32 +4,32 @@ import {
   type DefaultValues,
   type FieldErrors,
   type FieldValues,
-  useForm,
   type UseFormHandleSubmit,
   type UseFormProps,
   type UseFormReset,
   type UseFormSetValue,
   type UseFormWatch,
-  type ValidationMode
+  type ValidationMode,
+  useForm
 } from 'react-hook-form';
 
 import { type ValidationSchema } from '~/libs/types/types.js';
 
 type Parameters<T extends FieldValues = FieldValues> = {
   defaultValues: DefaultValues<T>;
-  validationSchema?: ValidationSchema;
   mode?: keyof ValidationMode;
+  validationSchema?: ValidationSchema;
 };
 
 type ReturnValue<T extends FieldValues = FieldValues> = {
-  reset: UseFormReset<T>;
-  watch: UseFormWatch<T>;
-  setValue: UseFormSetValue<T>;
   control: Control<T, null>;
   errors: FieldErrors<T>;
-  isValid: boolean;
-  isDirty: boolean;
   handleSubmit: UseFormHandleSubmit<T>;
+  isDirty: boolean;
+  isValid: boolean;
+  reset: UseFormReset<T>;
+  setValue: UseFormSetValue<T>;
+  watch: UseFormWatch<T>;
 };
 
 const useAppForm = <T extends FieldValues = FieldValues>({
@@ -38,8 +38,8 @@ const useAppForm = <T extends FieldValues = FieldValues>({
   validationSchema
 }: Parameters<T>): ReturnValue<T> => {
   let parameters: UseFormProps<T> = {
-    mode,
-    defaultValues
+    defaultValues,
+    mode
   };
 
   if (validationSchema) {
@@ -50,22 +50,22 @@ const useAppForm = <T extends FieldValues = FieldValues>({
   }
 
   const {
-    reset,
     control,
-    watch,
-    setValue,
+    formState: { errors, isDirty, isValid },
     handleSubmit,
-    formState: { errors, isValid, isDirty }
+    reset,
+    setValue,
+    watch
   } = useForm<T>(parameters);
 
   return {
-    reset,
     control,
     errors,
-    isValid,
-    isDirty,
-    setValue,
     handleSubmit,
+    isDirty,
+    isValid,
+    reset,
+    setValue,
     watch
   };
 };

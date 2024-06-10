@@ -1,75 +1,28 @@
 import { ServerErrorType, StorageKey } from '~/libs/enums/enums.js';
-import { ServerErrorResponse, type ValueOf } from '~/libs/types/types.js';
+import { type ServerErrorResponse, type ValueOf } from '~/libs/types/types.js';
 
 import { type StorageApi } from '../storage/storage.js';
 import { type HTTPCode } from './libs/enums/enums.js';
-import { HttpHeader, HTTPMethod } from './libs/enums/enums.js';
+import { HTTPMethod, HttpHeader } from './libs/enums/enums.js';
 import { HTTPError } from './libs/exceptions/exceptions.js';
-import { type HttpApi, type HttpOptions } from './libs/types/types.js';
 import { getStringifiedQuery } from './libs/helpers/helpers.js';
+import { type HttpApi, type HttpOptions } from './libs/types/types.js';
 
 type Constructor = {
   storageApi: StorageApi;
 };
 
 class Http implements HttpApi {
-  #storageApi: StorageApi;
-
-  public constructor({ storageApi }: Constructor) {
-    this.#storageApi = storageApi;
-  }
-
-  public async load<T>(
+  #getUrl = <T extends Record<string, unknown>>(
     url: string,
-    options: Partial<HttpOptions> = {}
-  ): Promise<T> | never {
-    const {
-      method = HTTPMethod.GET,
-      payload = null,
-      hasAuth = true,
-      contentType,
-      query
-    } = options;
-    const headers = this.#getHeaders({
-      hasAuth,
-      contentType
-    });
-
-    const response = await fetch(this.#getUrl(url, query), {
-      method,
-      headers,
-      body: payload
-    });
-
-    return (await this.#checkResponse(response)) as T;
-  }
-
-  async #checkResponse(response: Response): Promise<Response> {
-    if (!response.ok) {
-      await this.#handleError(response);
+    query: T | undefined
+  ): string => {
+    if (query) {
+      return `${url}?${getStringifiedQuery(query)}`;
     }
 
-    return this.#parseJSON(response);
-  }
-
-  #getHeaders({
-    hasAuth,
-    contentType
-  }: Partial<Pick<HttpOptions, 'hasAuth' | 'contentType'>>): Headers {
-    const headers = new Headers();
-
-    if (contentType) {
-      headers.append(HttpHeader.CONTENT_TYPE, contentType);
-    }
-
-    if (hasAuth) {
-      const token = this.#storageApi.get(StorageKey.TOKEN);
-
-      headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
-    }
-
-    return headers;
-  }
+    return url;
+  };
 
   #handleError = async (response: Response): Promise<never> => {
     let parsedException: ServerErrorResponse;
@@ -95,20 +48,67 @@ class Http implements HttpApi {
     });
   };
 
-  #getUrl = <T extends Record<string, unknown>>(
-    url: string,
-    query: T | undefined
-  ): string => {
-    if (query) {
-      return `${url}?${getStringifiedQuery(query)}`;
-    }
-
-    return url;
-  };
-
   #parseJSON = <T>(response: Response): Promise<T> => {
     return response.json() as Promise<T>;
   };
+
+  #storageApi: StorageApi;
+
+  public constructor({ storageApi }: Constructor) {
+    this.#storageApi = storageApi;
+  }
+
+  async #checkResponse(response: Response): Promise<Response> {
+    if (!response.ok) {
+      await this.#handleError(response);
+    }
+
+    return await this.#parseJSON(response);
+  }
+
+  #getHeaders({
+    contentType,
+    hasAuth
+  }: Partial<Pick<HttpOptions, 'contentType' | 'hasAuth'>>): Headers {
+    const headers = new Headers();
+
+    if (contentType) {
+      headers.append(HttpHeader.CONTENT_TYPE, contentType);
+    }
+
+    if (hasAuth) {
+      const token = this.#storageApi.get(StorageKey.TOKEN);
+
+      headers.append(HttpHeader.AUTHORIZATION, `Bearer ${token}`);
+    }
+
+    return headers;
+  }
+
+  public async load<T>(
+    url: string,
+    options: Partial<HttpOptions> = {}
+  ): Promise<T> | never {
+    const {
+      contentType,
+      hasAuth = true,
+      method = HTTPMethod.GET,
+      payload = null,
+      query
+    } = options;
+    const headers = this.#getHeaders({
+      contentType,
+      hasAuth
+    });
+
+    const response = await fetch(this.#getUrl(url, query), {
+      body: payload,
+      headers,
+      method
+    });
+
+    return (await this.#checkResponse(response)) as T;
+  }
 }
 
 export { Http };

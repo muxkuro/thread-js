@@ -13,26 +13,26 @@ class Config implements ConfigModule {
     this.#ENV = this.envSchema;
   }
 
-  public get ENV(): EnvironmentSchema {
-    return this.#ENV;
-  }
-
   private get envSchema(): EnvironmentSchema {
     return {
+      API: {
+        PATH: import.meta.env['VITE_API_PATH'] as string,
+        SERVER: import.meta.env['VITE_API_SERVER'] as string,
+        SOCKET_PATH: import.meta.env['VITE_SOCKET_PATH'] as string,
+        SOCKET_SERVER: import.meta.env['VITE_SOCKET_SERVER'] as string
+      },
       APP: {
         ENVIRONMENT: import.meta.env['VITE_APP_NODE_ENV'] as ValueOf<
           typeof AppEnvironment
         >,
-        PORT: Number(import.meta.env['VITE_APP_PORT']),
-        HOST: import.meta.env['VITE_APP_HOST'] as string
-      },
-      API: {
-        SERVER: import.meta.env['VITE_API_SERVER'] as string,
-        SOCKET_SERVER: import.meta.env['VITE_SOCKET_SERVER'] as string,
-        PATH: import.meta.env['VITE_API_PATH'] as string,
-        SOCKET_PATH: import.meta.env['VITE_SOCKET_PATH'] as string
+        HOST: import.meta.env['VITE_APP_HOST'] as string,
+        PORT: Number(import.meta.env['VITE_APP_PORT'])
       }
     };
+  }
+
+  public get ENV(): EnvironmentSchema {
+    return this.#ENV;
   }
 }
 

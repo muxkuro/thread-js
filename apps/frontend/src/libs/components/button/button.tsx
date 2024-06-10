@@ -9,33 +9,31 @@ import styles from './styles.module.scss';
 
 type ButtonProperties = {
   children?: ReactNode;
-  type?: ButtonType;
-  color?: ValueOf<typeof ButtonColor>;
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
   className?: string;
+  color?: ValueOf<typeof ButtonColor>;
   isBasic?: boolean;
+  isDisabled?: boolean;
   isFluid?: boolean;
   isLoading?: boolean;
   isPrimary?: boolean;
-  isDisabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  type?: ButtonType;
 };
 
 const Button: React.FC<ButtonProperties> = ({
-  onClick,
+  children,
   className,
-  type = 'button',
   color,
   isBasic = false,
+  isDisabled = false,
   isFluid = false,
   isLoading = false,
   isPrimary = false,
-  isDisabled = false,
-  children
+  onClick,
+  type = 'button'
 }) => {
   return (
     <button
-      disabled={isDisabled}
-      onClick={onClick}
       className={clsx(
         styles['btn'],
         isLoading && styles['loading'],
@@ -45,6 +43,8 @@ const Button: React.FC<ButtonProperties> = ({
         color && styles[`btn__${color}`],
         className
       )}
+      disabled={isDisabled}
+      onClick={onClick}
       type={type}
     >
       {children}

@@ -1,5 +1,4 @@
 import { RouterProvider } from '~/libs/components/components.js';
-
 import { AppRoute } from '~/libs/enums/enums.js';
 
 import { Auth } from '../auth/auth.js';
