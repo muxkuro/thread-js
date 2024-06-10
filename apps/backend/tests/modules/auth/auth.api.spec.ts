@@ -47,7 +47,7 @@ describe(`${authApiPath} routes`, () => {
 
       expect(response.statusCode).toBe(HTTPCode.UNPROCESSED_ENTITY);
       expect(response.json<Record<'message', string>>().message).toBe(
-        `${UserValidationMessage.USERNAME_REQUIRE}. ${UserValidationMessage.EMAIL_REQUIRE}. ${UserValidationMessage.PASSWORD_REQUIRE}`
+        `${UserValidationMessage.EMAIL_REQUIRE}. ${UserValidationMessage.PASSWORD_REQUIRE}. ${UserValidationMessage.USERNAME_REQUIRE}`
       );
     });
 

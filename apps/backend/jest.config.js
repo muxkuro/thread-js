@@ -7,7 +7,7 @@ import tsconfigJson from './tsconfig.json' assert { type: 'json' };
 const sourcePath = join(fileURLToPath(import.meta.url), '../');
 
 const manageKey = key => {
-  return key.includes('(.*)') ? key.slice(0, -1) + '\\.js$' : key;
+  return key.includes('(.*)') ? key.slice(0, -1) + String.raw`\.js$` : key;
 };
 
 const manageMapper = mapper => ({
