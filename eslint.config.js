@@ -10,6 +10,8 @@ import explicitGenerics from 'eslint-plugin-require-explicit-generics';
 import sonarjs from 'eslint-plugin-sonarjs';
 import unicorn from 'eslint-plugin-unicorn';
 import globals from 'globals';
+import { dirname } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const JS_MAX_PARAMS_ALLOWED = 3;
 
@@ -140,11 +142,8 @@ const typescriptConfig = {
   languageOptions: {
     parser: /** @type {ParserModule} */ (tsParser),
     parserOptions: {
-      project: [
-        './tsconfig.json',
-        './packages/**/tsconfig.json',
-        './apps/**/tsconfig.json'
-      ]
+      project: true,
+      tsconfigRootDir: dirname(fileURLToPath(import.meta.url))
     }
   },
   plugins: {
@@ -230,7 +229,7 @@ const overridesConfigs = [
   {
     files: [
       'commitlint.config.ts',
-      'prettier.config.ts',
+      'prettier.config.mjs',
       'stylelint.config.js',
       'knip.config.ts',
       'packages.d.ts',

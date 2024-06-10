@@ -16,7 +16,7 @@ const initialState: State = {
   user: null
 };
 
-const { actions, name, reducer } = createSlice({
+const { actions, reducer } = createSlice({
   extraReducers(builder) {
     builder
       .addMatcher(isAnyOf(signUp.pending), state => {
