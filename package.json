@@ -1,54 +1,66 @@
 {
   "name": "threadjs",
   "private": true,
+  "type": "module",
   "engines": {
     "node": "18.18.x",
     "npm": "9.8.x"
   },
   "workspaces": [
-    "client",
-    "server",
-    "shared"
+    "apps/*",
+    "packages/*"
   ],
   "scripts": {
-    "postinstall": "npm run build:shared",
-    "build:shared": "npm run build -w shared",
+    "_prettier": "prettier \"**/*.{js,ts,tsx,json,md,css,html}\"",
+    "git:hook:precommit": "lint-staged --cwd .",
+    "git:hook:commit": "npx @commitlint/cli --edit",
+    "build:shared": "npm run build -w packages/shared",
+    "build:frontend": "npm run build -w apps/frontend",
+    "build:backend": "npm run build -w apps/backend",
     "lint:editorconfig": "editorconfig-checker",
     "lint:fs": "ls-lint",
-    "lint:shared:js": "npm run lint:js -w shared",
-    "lint:shared": "npm run lint -w shared",
-    "lint:client:css": "npm run lint:css -w client",
-    "lint:client:js": "npm run lint:js -w client",
-    "lint:client": "npm run lint -w client",
-    "lint:prettify": "npx prettier --check \"**/*.{ts,tsx,scss,json,md,html}\"",
-    "lint:server:js": "npm run lint:js -w server",
-    "lint:server": "npm run lint -w server",
-    "lint": "npm run lint:editorconfig && npm run lint:fs && npm run lint:prettify && npm run lint -ws",
-    "prettify": "npx prettier --write \"**/*.{ts,tsx,scss,json,md,html}\""
+    "lint:type": "npx tsc --noEmit",
+    "lint:js": "npx eslint . --max-warnings=0 --no-warn-ignored",
+    "lint:format": "npm run _prettier -- --check",
+    "lint:trash": "knip",
+    "format": "npm run _prettier -- --write",
+    "lint": "concurrently \"npm:lint:*\" && npm run lint --workspaces",
+    "ci:prepare": "simple-git-hooks"
   },
   "devDependencies": {
     "@commitlint/cli": "18.4.3",
-    "@commitlint/config-conventional": "18.4.3",
+    "@commitlint/types": "19.0.3",
+    "@eslint/js": "9.4.0",
     "@ls-lint/ls-lint": "2.2.2",
-    "danger": "11.3.1",
-    "editorconfig-checker": "5.1.2",
+    "@types/eslint": "8.56.10",
+    "@types/eslint__js": "8.42.3",
+    "@types/lint-staged": "13.3.0",
     "@typescript-eslint/eslint-plugin": "6.14.0",
     "@typescript-eslint/parser": "6.14.0",
+    "concurrently": "8.2.2",
+    "danger": "11.3.1",
+    "editorconfig-checker": "5.1.2",
     "eslint": "8.56.0",
+    "eslint-import-resolver-typescript": "3.6.1",
     "eslint-plugin-import": "2.29.1",
-    "eslint-plugin-simple-import-sort": "10.0.0",
+    "eslint-plugin-jsdoc": "48.2.7",
+    "eslint-plugin-perfectionist": "2.10.0",
+    "eslint-plugin-require-explicit-generics": "1.0.0",
     "eslint-plugin-sonarjs": "0.23.0",
     "eslint-plugin-unicorn": "49.0.0",
+    "globals": "15.3.0",
+    "knip": "5.17.4",
     "lint-staged": "15.2.0",
     "prettier": "3.1.1",
     "simple-git-hooks": "2.9.0",
     "stylelint": "16.0.2",
+    "stylelint-config-recess-order": "5.0.1",
     "stylelint-config-standard": "35.0.0",
     "tsc-alias": "1.8.8",
     "typescript": "5.3.3"
   },
   "simple-git-hooks": {
-    "pre-commit": "npx lint-staged",
-    "commit-msg": "npx commitlint --edit $1"
+    "pre-commit": "npm run lint:type && npm run git:hook:precommit",
+    "commit-msg": "npm run git:hook:commit"
   }
 }
