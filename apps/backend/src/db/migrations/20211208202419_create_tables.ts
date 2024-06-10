@@ -9,15 +9,13 @@ const ColumnName = {
   EMAIL: 'email',
   ID: 'id',
   PASSWORD: 'password',
-  UPDATED_AT: 'updated_at',
-  USERNAME: 'username'
+  UPDATED_AT: 'updated_at'
 } as const;
 
 const up = async (knex: Knex): Promise<void> => {
   await knex.schema.createTable(TableName.USERS, table => {
     table.increments(ColumnName.ID).primary();
     table.string(ColumnName.EMAIL).notNullable().unique();
-    table.string(ColumnName.USERNAME).notNullable().unique();
     table.string(ColumnName.PASSWORD).notNullable();
     table
       .dateTime(ColumnName.CREATED_AT)

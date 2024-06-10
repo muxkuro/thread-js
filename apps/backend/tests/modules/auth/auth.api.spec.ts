@@ -10,12 +10,12 @@ import {
   AuthApiPath,
   type UserSignUpRequestDto,
   type UserSignUpResponseDto
-} from '~/packages/auth/auth.js';
+} from '~/modules/auth/auth.js';
 import {
   UserPayloadKey,
   UserValidationMessage,
   UserValidationRule
-} from '~/packages/user/user.js';
+} from '~/modules/user/user.js';
 
 import { API_V1_VERSION_PREFIX } from '../../libs/constants/constants.js';
 import { buildApp } from '../../libs/modules/app/app.js';

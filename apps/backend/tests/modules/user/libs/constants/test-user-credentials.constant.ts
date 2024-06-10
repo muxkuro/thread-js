@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker';
 
-import { type UserSignUpRequestDto } from '~/packages/auth/auth.js';
-import { UserPayloadKey } from '~/packages/user/user.js';
+import { type UserSignUpRequestDto } from '~/modules/auth/auth.js';
+import { UserPayloadKey } from '~/modules/user/user.js';
 
 const USERS_COUNT = 2;
 

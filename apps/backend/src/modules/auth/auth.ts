@@ -1,6 +1,6 @@
 import { APIPath } from '~/libs/enums/enums.js';
 import { logger } from '~/libs/modules/logger/logger.js';
-import { userService } from '~/packages/user/user.js';
+import { userService } from '~/modules/user/user.js';
 
 import { Auth as AuthController } from './auth.controller.js';
 import { Auth as AuthService } from './auth.service.js';
