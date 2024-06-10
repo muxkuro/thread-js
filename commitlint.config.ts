@@ -1,4 +1,4 @@
-import { type UserConfig } from '@commitlint/types';
+import { type SyncRule, type UserConfig } from '@commitlint/types';
 
 import { ProjectPrefix } from './project.config.js';
 
@@ -32,13 +32,13 @@ const configuration: UserConfig = {
   plugins: [
     {
       rules: {
-        'commit-message-match': ({ header }) => {
+        'commit-message-match': (({ header }) => {
           if (!COMMIT_MESSAGE_REGEXP.test(header as string)) {
             return [false, COMMIT_MESSAGE_MATCH_RULE_MESSAGE];
           }
 
           return [true];
-        }
+        }) as SyncRule
       }
     }
   ],

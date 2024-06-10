@@ -245,6 +245,12 @@ const overridesConfigs = [
     rules: {
       '@typescript-eslint/explicit-function-return-type': ['off']
     }
+  },
+  {
+    files: ['commitlint.config.ts'],
+    rules: {
+      '@typescript-eslint/no-magic-numbers': ['off']
+    }
   }
 ];
 
