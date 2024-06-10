@@ -2,7 +2,7 @@ import { type ParsedQs, parse } from 'qs';
 
 import { config } from '~/libs/modules/config/config.js';
 import { database } from '~/libs/modules/database/database.js';
-import { authController } from '~/packages/auth/auth.js';
+import { authController } from '~/modules/auth/auth.js';
 
 import { logger } from '../logger/logger.js';
 import { ServerApp } from './server-app.js';

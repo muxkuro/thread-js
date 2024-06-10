@@ -1,4 +1,4 @@
-import { Config } from './config.package.js';
+import { Config } from './config.module.js';
 
 const config = new Config();
 

@@ -1,6 +1,6 @@
-import { UserConfig } from '@commitlint/types';
+import { type SyncRule, type UserConfig } from '@commitlint/types';
 
-import { ProjectPrefix } from './project.config';
+import { ProjectPrefix } from './project.config.js';
 
 const COMMIT_MODIFIERS = ['+', '*', '-'];
 const COMMIT_MESSAGE_REGEXP = new RegExp(
@@ -22,23 +22,23 @@ Examples:
   - production: - comments in ui/ux homework`;
 
 const configuration: UserConfig = {
+  defaultIgnores: true,
   parserPreset: {
     parserOpts: {
-      headerPattern: COMMIT_MESSAGE_REGEXP,
-      headerCorrespondence: ['prefix', 'modifier', 'description']
+      headerCorrespondence: ['prefix', 'modifier', 'description'],
+      headerPattern: COMMIT_MESSAGE_REGEXP
     }
   },
-  defaultIgnores: true,
   plugins: [
     {
       rules: {
-        'commit-message-match': ({ header }) => {
-          if (!COMMIT_MESSAGE_REGEXP.test(header)) {
+        'commit-message-match': (({ header }) => {
+          if (!COMMIT_MESSAGE_REGEXP.test(header as string)) {
             return [false, COMMIT_MESSAGE_MATCH_RULE_MESSAGE];
           }
 
           return [true];
-        }
+        }) as SyncRule
       }
     }
   ],

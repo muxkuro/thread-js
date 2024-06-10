@@ -2,6 +2,7 @@ import { RouterProvider } from '~/libs/components/components.js';
 import { AppRoute } from '~/libs/enums/enums.js';
 
 import { Auth } from '../auth/auth.js';
+import { Root } from '../root/root.js';
 
 const App: React.FC = () => {
   return (
@@ -10,7 +11,7 @@ const App: React.FC = () => {
         {
           children: [
             {
-              element: 'Root',
+              element: <Root />,
               path: AppRoute.ROOT
             },
             {

@@ -1,17 +1,17 @@
 import { configureStore } from '@reduxjs/toolkit';
 
 import { AppEnvironment } from '~/libs/enums/enums.js';
-import { type ConfigModule } from '~/libs/packages/config/config.js';
+import { type ConfigModule } from '~/libs/modules/config/config.js';
 import { authApi, authReducer } from '~/modules/auth/auth.js';
 import { storageApi } from '~/modules/storage/storage.js';
 
 import {
   type ExtraArguments,
   type StoreInstance,
-  type StorePackage
+  type StoreModule
 } from './libs/types/types.js';
 
-class Store implements StorePackage {
+class Store implements StoreModule {
   #instance: StoreInstance;
 
   public constructor(config: ConfigModule) {

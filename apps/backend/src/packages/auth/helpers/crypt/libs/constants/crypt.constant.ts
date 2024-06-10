@@ -1,3 +1,0 @@
-const PASSWORD_SALT_ROUNDS = 10;
-
-export { PASSWORD_SALT_ROUNDS };

@@ -25,8 +25,8 @@ type StoreInstance = ReturnType<
   >
 >;
 
-type StorePackage = {
+type StoreModule = {
   extraArguments: ExtraArguments;
 };
 
-export { type ExtraArguments, type StoreInstance, type StorePackage };
+export { type ExtraArguments, type StoreInstance, type StoreModule };
