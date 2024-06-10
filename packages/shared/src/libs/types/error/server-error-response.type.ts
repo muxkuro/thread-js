@@ -17,8 +17,4 @@ type ServerErrorResponse =
   | ServerCommonErrorResponse
   | ServerValidationErrorResponse;
 
-export {
-  type ServerCommonErrorResponse,
-  type ServerErrorResponse,
-  type ServerValidationErrorResponse
-};
+export { type ServerErrorResponse, type ServerValidationErrorResponse };

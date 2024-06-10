@@ -9,15 +9,10 @@ const userService = new UserService({
   userRepository
 });
 
-export { userRepository, userService };
+export { userService };
 export {
   UserPayloadKey,
   UserValidationMessage,
   UserValidationRule
 } from './libs/enums/enums.js';
-export {
-  type User,
-  type UserRepository,
-  type UserService
-} from './libs/types/types.js';
-export { User as UserModel } from './user.model.js';
+export { type UserService } from './libs/types/types.js';

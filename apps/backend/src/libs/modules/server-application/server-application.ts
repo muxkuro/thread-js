@@ -32,6 +32,5 @@ const serverApp = new ServerApp({
 });
 
 export { serverApp, serverAppApiV1 };
-export { ExitCode } from './libs/enums/enums.js';
 export { type ServerApplicationRouteParameters } from './libs/types/types.js';
 export { ServerApp } from './server-app.js';

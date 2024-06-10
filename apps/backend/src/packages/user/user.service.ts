@@ -1,3 +1,4 @@
+import { type UserSignUpRequestDto } from '../auth/libs/types/types.js';
 import { type User as TUser, type UserService } from './libs/types/types.js';
 import { type User as UserRepository } from './user.repository.js';
 
@@ -10,8 +11,8 @@ class User implements UserService {
     this.#userRepository = userRepository;
   }
 
-  public getById(id: number): Promise<TUser | null> {
-    return this.#userRepository.getById(id);
+  public create(payload: UserSignUpRequestDto): Promise<TUser> {
+    return this.#userRepository.create(payload);
   }
 }
 

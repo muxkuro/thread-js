@@ -1,6 +1,5 @@
 const ExceptionName = {
-  HTTP_ERROR: 'HTTPError',
-  INVALID_CREDENTIALS: 'InvalidCredentials'
+  HTTP_ERROR: 'HTTPError'
 } as const;
 
 export { ExceptionName };

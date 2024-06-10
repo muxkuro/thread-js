@@ -1,1 +1,1 @@
-export { ExceptionMessage, ServerErrorType } from '@thread-js/shared';
+export { ServerErrorType } from '@thread-js/shared';

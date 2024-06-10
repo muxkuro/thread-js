@@ -36,4 +36,4 @@ const { actions, name, reducer } = createSlice({
   reducers: {}
 });
 
-export { actions, name, reducer };
+export { actions, reducer };

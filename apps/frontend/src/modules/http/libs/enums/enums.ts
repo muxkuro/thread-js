@@ -1,2 +1,1 @@
-export { HttpHeader } from './http-header.enum.js';
-export { HTTPCode, HTTPMethod } from '@thread-js/shared';
+export { HTTPCode, HTTPMethod, HttpHeader } from '@thread-js/shared';
