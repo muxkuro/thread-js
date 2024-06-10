@@ -7,7 +7,7 @@ const TableName = {
 } as const;
 
 const seed = async (knex: Knex): Promise<void> => {
-  await knex.transaction(async (trx) => {
+  await knex.transaction(async trx => {
     await trx(TableName.USERS).del();
 
     await trx(TableName.USERS).insert(usersSeed).returning('*');

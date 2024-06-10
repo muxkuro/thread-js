@@ -10,7 +10,7 @@ const getValidationErrorInfo = (error: ValidationError): ErrorInfo => {
   return {
     internalMessage: `[Validation Error]: ${message}`,
     response: {
-      details: details.map((detail) => {
+      details: details.map(detail => {
         return {
           message: detail.message,
           path: detail.path

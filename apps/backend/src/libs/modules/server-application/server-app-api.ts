@@ -14,7 +14,7 @@ class ServerAppApi implements ServerApi {
 
   public constructor({ routes, version }: Constructor) {
     this.#version = version;
-    this.#routes = routes.map((handler) => ({
+    this.#routes = routes.map(handler => ({
       ...handler,
       url: joinPath([`/${this.#version}`, handler.url])
     }));

@@ -52,7 +52,7 @@ class ServerApp {
   #logger: LoggerModule;
 
   #registerRoutes = (): void => {
-    const routers = this.#apis.flatMap((it) => it.routes);
+    const routers = this.#apis.flatMap(it => it.routes);
 
     for (const it of routers) {
       const { url: path, ...parameters } = it;

@@ -20,5 +20,5 @@ type ServerErrorResponse =
 export {
   type ServerCommonErrorResponse,
   type ServerErrorResponse,
-  type ServerValidationErrorResponse,
+  type ServerValidationErrorResponse
 };

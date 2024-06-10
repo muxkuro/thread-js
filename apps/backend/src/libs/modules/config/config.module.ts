@@ -22,7 +22,7 @@ class Config implements ConfigModule {
     this.#envSchema.load({});
     this.#envSchema.validate({
       allowed: 'strict',
-      output: (message) => {
+      output: message => {
         this.#logger.info(message);
       }
     });
