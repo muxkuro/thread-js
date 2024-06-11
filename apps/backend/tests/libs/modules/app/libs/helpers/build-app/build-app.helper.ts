@@ -25,7 +25,7 @@ const buildApp: BuildApp = () => {
     database,
     logger,
     options: {
-      logger: true
+      logger: false
     }
   });
 

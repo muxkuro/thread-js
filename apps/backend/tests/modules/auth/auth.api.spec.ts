@@ -42,53 +42,6 @@ describe(`${authApiPath} routes`, () => {
   describe(`${registerEndpoint} (${HTTPMethod.POST}) endpoint`, () => {
     const app = getApp();
 
-    it(`should return ${HTTPCode.UNPROCESSED_ENTITY} of empty ${UserPayloadKey.USERNAME} validation error`, async () => {
-      const response = await app.inject().post(registerEndpoint).body({});
-
-      expect(response.statusCode).toBe(HTTPCode.UNPROCESSED_ENTITY);
-      expect(response.json<Record<'message', string>>().message).toBe(
-        `${UserValidationMessage.USERNAME_REQUIRE}. ${UserValidationMessage.EMAIL_REQUIRE}. ${UserValidationMessage.PASSWORD_REQUIRE}`
-      );
-    });
-
-    it(`should return ${HTTPCode.UNPROCESSED_ENTITY} of too short ${UserPayloadKey.USERNAME} validation error`, async () => {
-      const [validTestUser] = TEST_USERS_CREDENTIALS;
-
-      const response = await app
-        .inject()
-        .post(registerEndpoint)
-        .body({
-          ...validTestUser,
-          [UserPayloadKey.USERNAME]: faker.string.alpha(
-            UserValidationRule.USERNAME_MIN_LENGTH - VALIDATION_RULE_DELTA
-          )
-        });
-
-      expect(response.statusCode).toBe(HTTPCode.UNPROCESSED_ENTITY);
-      expect(response.json<Record<'message', string>>().message).toBe(
-        UserValidationMessage.USERNAME_MIN_LENGTH
-      );
-    });
-
-    it(`should return ${HTTPCode.UNPROCESSED_ENTITY} of too long ${UserPayloadKey.USERNAME} validation error`, async () => {
-      const [validTestUser] = TEST_USERS_CREDENTIALS;
-
-      const response = await app
-        .inject()
-        .post(registerEndpoint)
-        .body({
-          ...validTestUser,
-          [UserPayloadKey.USERNAME]: faker.string.alpha(
-            UserValidationRule.USERNAME_MAX_LENGTH + VALIDATION_RULE_DELTA
-          )
-        });
-
-      expect(response.statusCode).toBe(HTTPCode.UNPROCESSED_ENTITY);
-      expect(response.json<Record<'message', string>>().message).toBe(
-        UserValidationMessage.USERNAME_MAX_LENGTH
-      );
-    });
-
     it(`should return ${HTTPCode.UNPROCESSED_ENTITY} of empty ${UserPayloadKey.EMAIL} validation error`, async () => {
       const [validTestUser] = TEST_USERS_CREDENTIALS;
       const { [UserPayloadKey.EMAIL]: _email, ...user } =
@@ -183,8 +136,7 @@ describe(`${authApiPath} routes`, () => {
       expect(response.statusCode).toBe(HTTPCode.CREATED);
       expect(response.json()).toEqual(
         expect.objectContaining({
-          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
-          [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME]
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL]
         })
       );
 
@@ -196,8 +148,7 @@ describe(`${authApiPath} routes`, () => {
 
       expect(savedDatabaseUser).toEqual(
         expect.objectContaining({
-          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL],
-          [UserPayloadKey.USERNAME]: validTestUser[UserPayloadKey.USERNAME]
+          [UserPayloadKey.EMAIL]: validTestUser[UserPayloadKey.EMAIL]
         })
       );
     });

@@ -21,12 +21,6 @@ class User
 
     return user ?? null;
   }
-
-  public async getByUsername(username: string): Promise<TUser | null> {
-    const user = await this.model.query().select().findOne({ username });
-
-    return user ?? null;
-  }
 }
 
 export { User };

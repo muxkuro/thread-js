@@ -125,6 +125,7 @@ const unicornConfig = {
   },
   rules: {
     ...unicorn.configs.recommended.rules,
+    'unicorn/import-style': ['off'],
     'unicorn/no-null': ['off']
   }
 };
@@ -199,6 +200,11 @@ const typescriptConfig = {
         next: ['return', 'block-like', 'throw', 'type'],
         prev: '*'
       }
+    ],
+    '@typescript-eslint/restrict-plus-operands': ['off'],
+    '@typescript-eslint/restrict-template-expressions': [
+      'error',
+      { allowNumber: true }
     ],
     '@typescript-eslint/return-await': ['error', 'always']
   }
