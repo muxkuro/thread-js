@@ -142,6 +142,25 @@ You should use .env.example files as a reference.
 
 6. Run frontend: `npm run start:dev -w apps/frontend`
 
+This project has a strong configuration with linters so to make sure that while are you using vs code as an editor you will have the ability to make is visible not only terminal just add this setting locally into repository:
+
+Create a file .vscode/settings.json
+
+```
+{
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.workingDirectories": [
+    "./",
+    { "pattern": "./packages/**/" },
+    { "pattern": "./apps/**/" }
+  ],
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.js"
+  }
+}
+
+```
+
 ## Development Flow
 
 ### Pull Request Flow
