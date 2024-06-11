@@ -142,6 +142,25 @@ You should use .env.example files as a reference.
 
 6. Run frontend: `npm run start:dev -w apps/frontend`
 
+This project has a strong configuration with linters so to make sure that while are you using vs code as an editor you will have the ability to make is visible not only terminal just add this setting locally into repository:
+
+Create a file .vscode/settings.json
+
+```
+{
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.workingDirectories": [
+    "./",
+    { "pattern": "./packages/**/" },
+    { "pattern": "./apps/**/" }
+  ],
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.js"
+  }
+}
+
+```
+
 ## Development Flow
 
 ### Pull Request Flow
@@ -185,7 +204,7 @@ Examples:
 
 The entire list of tasks can also be found on the [**Issues**](https://github.com/BinaryStudioAcademy/thread-js/issues) You can sort only usefull ones by `ready-for-student` label. These tasks are grouped with must-have(with current label) and optional.
 
-## PAY ATTENSION!!!
+## PAY ATTENTION!!!
 
 The task will be considered completed if it is fully completed, the feature works, and whether exists the correct design following the `Development Flow` from your side. So to pass criteria include The PullRequest with direction to the default branch, proper naming of the branch, commis, PR title, and filled description of what was done here. Let's look at its implementation and evaluate whether the logic was distributed correctly in the project. This will show how much you understand the architecture. We will also comment on the code...
 
