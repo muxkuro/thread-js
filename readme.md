@@ -8,48 +8,84 @@ The main theme of the project is a social network similar to Twitter.
 
 The main idea of the project is to onboard students with our vision of how a real project should look like from the inside, and give them the opportunity to individually explore how the architecture and structure of the project works, see its possible configurations, try to deeply understand someone else's code.
 
+### Useful Links
+
+- Pay attention, that we have certain [quality criteria](https://github.com/BinaryStudioAcademy/quality-criteria/blob/production/src/javascript.md), which we should follow during application development.
+
+### Requirements
+
+- [NodeJS](https://nodejs.org/en) (20.11.x);
+- [npm](https://www.npmjs.com/) (10.2.x);
+- [PostgreSQL](https://www.postgresql.org/) (15.5)
+
 ## Technologies
 
 The main frameworks and libraries used in the project are listed here. A complete list of technologies used for each part of the project is in the `package.json` files in the `client` and `server` folders.
 
-### Common
+### Global
 
-1. ESLatest
-2. [Typescript](https://www.typescriptlang.org/)
-3. [Git](https://git-scm.com/doc)
-4. [REST API](https://www.restapitutorial.com/lessons/restquicktips.html)
-5. [JWT](https://en.wikipedia.org/wiki/JSON_Web_Token)
-6. [Socket.IO](https://socket.io/docs/)
-7. [npm](<https://en.wikipedia.org/wiki/Npm_(software)>)
-8. [npm workspaces](https://docs.npmjs.com/cli/v7/using-npm/workspaces)
-9. [ESLint](https://eslint.org/docs/user-guide/getting-started)
-10. [joi](https://www.npmjs.com/package/joi)
-11. [dayjs](https://day.js.org/)
+#### Technologies
+
+1. [Typescript](https://www.typescriptlang.org/)
+2. [npm workspaces](https://docs.npmjs.com/cli/v9/using-npm/workspaces)
 
 ### Frontend
 
-1. [React](https://reactjs.org/docs/getting-started.html)
-2. [Vite](https://vitejs.dev/)
-3. [React Redux](https://redux.js.org/introduction/getting-started)
-4. [React Hook Form](https://react-hook-form.com/get-started)
-5. [history](https://www.npmjs.com/package/history)
+#### Technologies
+
+1. [React](https://react.dev/) — a frontend library
+2. [Redux](https://redux.js.org/) + [Redux Toolkit](https://redux-toolkit.js.org/) — a state manager
+
+#### Folder Structure
+
+1. assets - static assets (images, global styles)
+2. libs - shared libraries and utilities
+
+   2.1 components - plain react components
+
+   2.2 enums
+
+   2.3 helpers
+
+   2.4 hooks
+
+   2.5 modules - separate features or functionalities
+
+   2.6 types
+
+3. modules - separate app features or functionalities
+4. pages - app pages
 
 ### Backend
 
-1. [Node.js](https://nodejs.org/en/)
-2. [Fastify](https://www.fastify.io/docs/v3.24.x/)
-3. [Knex](https://knexjs.org/)
-4. [Objection](https://vincit.github.io/objection.js/)
-5. [axios](https://www.npmjs.com/package/axios)
-6. [bcrypt](https://www.npmjs.com/package/bcrypt)
-7. [nodemon](https://www.npmjs.com/package/nodemon)
-8. [dotenv](https://www.npmjs.com/package/dotenv)
-9. [jsonwebtoken](https://www.npmjs.com/package/jsonwebtoken)
-10. [jest](https://www.npmjs.com/package/jest)
+#### Technologies
 
-### Database
+1. [Fastify](https://fastify.dev/) — a backend framework
+2. [Knex](https://knexjs.org/) — a query builder
+3. [Objection](https://vincit.github.io/objection.js/) — an ORM
 
-1. [PostgreSQL](https://www.postgresql.org/download/ 'PostgreSQL')
+#### Folder Structure
+
+1. db - database data (migrations, seeds)
+2. libs - shared libraries and utilities
+
+   2.1 enums
+
+   2.2 exceptions
+
+   2.3 helpers
+
+   2.4 modules - separate features or functionalities
+
+   2.5 types
+
+3. modules - separate app features or functionalities
+
+### Shared Package
+
+#### Reason
+
+As we are already using js on both frontend and backend it would be useful to share some contracts and code between them.
 
 ## Installation
 
@@ -83,155 +119,96 @@ The main frameworks and libraries used in the project are listed here. A complet
 
 6.  **Create a repo at [Bitbucket](https://bitbucket.org/) and carry out further development there.**
 
-### Root of project
+## How to Run
 
-1.  In the root of the project, install all the dependencies with command:
+### Manually
 
-    ```
-    npm install
-    ```
+1. Create and fill all .env files. These files are:
 
-2.  After installing the packages, in the root of the project, you need to run the command to [git-hooks](https://www.npmjs.com/package/simple-git-hooks):
+- apps/frontend/.env
+- apps/backend/.env
 
-    ```
-    npx simple-git-hooks
-    ```
+You should use .env.example files as a reference.
 
-    **Now, for each of your commits, the linter will be launched and check your code. It's very important and must have thing, developer should follow linter instructions, without it the PR cannot be merged in real life(IN YOUR CASE, THE WORK MAY NOT BE PROPERLY EVALUATED)**
+1. Install dependencies: `npm install`.
 
-### Backend
+2. Install pre-commit hooks: `npx simple-git-hooks`. This hook is used to verify code style on commit.
 
-1.  In the command line (terminal) go to the folder server:
+3. Run database. You can run it by installing postgres on your computer.
 
-    ```
-    cd /* path to server folder */
-    ```
+4. Apply migrations: `npm run migrate:dev -w apps/backend`
 
-2.  In the server folder create a file **.env** and copy the contents of the file **.env.example** into it.
+5. Run backend: `npm run start:dev -w apps/backend`
 
-    **Note**: file **.env** contains real project keys and should not be saved to the repository.
+6. Run frontend: `npm run start:dev -w apps/frontend`
 
-    Replace in file **.env** key values to real.
-    In order to specify the keys for Gyazo Storage, you need to register on the site [Gyazo](https://gyazo.com/captures) and [register the app](https://gyazo.com/oauth/applications). Then, in **.env** use `access token` from the recently created application to Gyazo.
+This project has a strong configuration with linters so to make sure that while are you using vs code as an editor you will have the ability to make is visible not only terminal just add this setting locally into repository:
 
-3.  Run [migrations](https://knexjs.org/#Migrations) and seeds to populate the database with demo data. To do this, in the command line (terminal) in the server folder, run:
-
-    ```
-    npm run migrate:dev
-    npm run seed:run
-    ```
-
-    Check the database for demo data.
-
-4.  To start the server in the command line (terminal) in the server folder, run:
-
-    ```
-    npm run start:dev
-    ```
-
-5.  To test the correct completing the task in the command line (terminal) in the server folder, run:
-    ```
-    npm run test:${task key}
-    ```
-    For example: `dislike post` task
-    ```
-    npm run test:dislike-post
-    ```
-    Pay attention! During development, tests from previous tasks may be failled, this is an expected behavior, focus on those that correspond to the current task.
-
-### Frontend
-
-1.  In the command line (terminal) go to the `client` folder:
-
-    ```
-    cd /* path to client folder */
-    ```
-
-2.  In the `client` folder create a file **.env** and copy the contents of the file into it **.env.example**.
-
-    **Note**: file **.env** contains real project keys and should not be saved to the repository.
-
-    Replace in file **.env** key values to real.
-
-3.  To run the client from the command line (terminal) in the client folder, run:
-
-    ```
-    npm run start:dev
-    ```
-
-    The app should automatically open in your default browser.
-
-### 🥊 Code quality
-
-- [simple-git-hooks](https://www.npmjs.com/package/simple-git-hooks) — a tool that lets you easily manage git hooks.
-- [lint-staged](https://www.npmjs.com/package/lint-staged) — run linters on git staged files.
-- [dangerjs](https://danger.systems/js/) — automate common code review chores.
-- [commitlint](https://commitlint.js.org/) — helps your team adhere to a commit convention.
-- [editorconfig](https://editorconfig.org/) — helps maintain consistent coding styles for multiple developers working on the same project across various editors and IDEs.
-- [prettier](https://prettier.io/) — an opinionated code formatter.
-- [ls-lint](https://ls-lint.org/) — file and directory name linter.
-- [eslint](https://eslint.org/) — find problems in your JS code.
-- [stylelint](https://stylelint.io/) — find and fix problems in your CSS code.
-
-## 🧑‍💻 CI
-
-### 🗞 Git
-
-#### 🏅 Pull Request flow
+Create a file .vscode/settings.json
 
 ```
-<project-prefix>-<issue-number>: <ticket-title>
-```
-
-##### Example
-
-- `thjs-5: Add Clinician Dashboard`
-
-#### 🌳 Branch flow
-
-```
-<type>/<project-prefix>-<issue-number>-<short-desc>
-```
-
-##### Types
-
-- task
-- fix
-
-##### Examples
-
-- `task/thjs-5-add-clinician-dashboard`
-- `task/thjs-12-add-clinician-flow`
-- `fix/thjs-16-fix-clinician-flow`
-
-#### 🗂 Commit flow
+{
+  "eslint.experimental.useFlatConfig": true,
+  "eslint.workingDirectories": [
+    "./",
+    { "pattern": "./packages/**/" },
+    { "pattern": "./apps/**/" }
+  ],
+  "eslint.options": {
+    "overrideConfigFile": "eslint.config.js"
+  }
+}
 
 ```
-<project-prefix>-<issue-number>: <modifier> <description>
+
+## Development Flow
+
+### Pull Request Flow
+
+```
+<type>: <ticket-title> <project-prefix>-<issue-number>
 ```
 
-##### Modifiers
+For the full list of types check [Conventional Commits](https://github.com/conventional-changelog/commitlint/tree/master/%40commitlint/config-conventional)
 
-- `+` (add)
-- `*` (edit)
-- `-` (remove)
+Examples:
 
-##### Examples
+- `feat: add dashboard screen tm-123`
 
-- `thjs-5: + title for dashboard`
-- `thjs-12: * dashboard title`
-- `thjs-16: - dashboard title`
+### Branch Flow
+
+```
+<issue-number>-<type>-<short-desc>
+```
+
+Examples:
+
+- `123-feat-add-dashboard`
+- `12-feat-add-user-flow`
+- `34-fix-user-flow`
+
+### Commit Flow
+
+We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0) to handle commit messages
+
+```
+<type>: <description> <project-prefix>-<issue-number>
+```
+
+Examples:
+
+- `feat: add dashboard component tm-45`
+- `fix: update dashboard card size tm-212`
 
 ## PS
 
-The entire list of tasks can also be found on the board [**Trello**](https://trello.com/b/9Y9ZIr6j '**Trello**') in the column **To Do**. You need to copy the board for yourself and work on it. This will help you track the entire process of your work, and we will determine what is already ready. The task will be considered completed if it is fully completed and the feature works. Let's look at its implementation and evaluate whether the logic was distributed correctly in the project. This will show how much you understand the architecture. We will also comment on the code..
+The entire list of tasks can also be found on the [**Issues**](https://github.com/BinaryStudioAcademy/thread-js/issues) You can sort only usefull ones by `ready-for-student` label. These tasks are grouped with must-have(with current label) and optional.
+
+## PAY ATTENTION!!!
+
+The task will be considered completed if it is fully completed, the feature works, and whether exists the correct design following the `Development Flow` from your side. So to pass criteria include The PullRequest with direction to the default branch, proper naming of the branch, commis, PR title, and filled description of what was done here. Let's look at its implementation and evaluate whether the logic was distributed correctly in the project. This will show how much you understand the architecture. We will also comment on the code...
 
 The main result of the work can be determined by how deeply you were able to understand the project and understand it, and how far you have advanced in personal learning.
-
-Links:
-
-1. [Repo](https://github.com/BinaryStudioAcademy/thread-js).
-2. [Trello](https://trello.com/b/9Y9ZIr6j).
 
 ## FAQ:
 
@@ -242,7 +219,3 @@ Complete freedom of action, feel free, use whatever you want.
 2. Is it possible to change the database (add columns, tables)?
 
 It is possible, and in some tasks it is even necessary. To do this, you need to create new migrations. Existing migrations cannot be changed!!! Please do not forget it.
-
-3. When registering an application on the Gyazo website, you must provide `Authorization callback URL`
-
-Use https://www.google.com/.

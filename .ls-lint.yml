@@ -20,11 +20,9 @@ ls:
 ignore:
   - .git
   - node_modules
-  - build
-  - shared/build
-  - shared/node_modules
-  - client/build
-  - client/node_modules
-  - server/build
-  - server/node_modules
-  - .idea
+  - packages/shared/build
+  - packages/shared/node_modules
+  - apps/frontend/build
+  - apps/frontend/node_modules
+  - apps/backend/build
+  - apps/backend/node_modules

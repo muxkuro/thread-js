@@ -1,4 +1,8 @@
 {
+  "include": ["**/*.ts", "**/*.js", "prettier.config.mjs"],
+  "exclude": ["node_modules", "apps", "packages", "dangerfile.ts"],
+  "files": ["packages.d.ts"],
+  "lib": ["ESNext"],
   "compilerOptions": {
     "strict": true,
     "noUncheckedIndexedAccess": true,
