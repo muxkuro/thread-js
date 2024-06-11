@@ -185,7 +185,7 @@ Examples:
 
 The entire list of tasks can also be found on the [**Issues**](https://github.com/BinaryStudioAcademy/thread-js/issues) You can sort only usefull ones by `ready-for-student` label. These tasks are grouped with must-have(with current label) and optional.
 
-## PAY ATTENSION!!!
+## PAY ATTENTION!!!
 
 The task will be considered completed if it is fully completed, the feature works, and whether exists the correct design following the `Development Flow` from your side. So to pass criteria include The PullRequest with direction to the default branch, proper naming of the branch, commis, PR title, and filled description of what was done here. Let's look at its implementation and evaluate whether the logic was distributed correctly in the project. This will show how much you understand the architecture. We will also comment on the code...
 
