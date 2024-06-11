@@ -10,8 +10,7 @@ const TEST_USERS_CREDENTIALS = Array.from(
   (): UserSignUpRequestDto => {
     return {
       [UserPayloadKey.EMAIL]: faker.internet.email(),
-      [UserPayloadKey.PASSWORD]: faker.internet.password(),
-      [UserPayloadKey.USERNAME]: faker.person.firstName()
+      [UserPayloadKey.PASSWORD]: faker.internet.password()
     };
   }
 );

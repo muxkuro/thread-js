@@ -1,5 +1,4 @@
 import { type Logger as LibraryLogger, pino } from 'pino';
-import pretty from 'pino-pretty';
 
 import { type LoggerModule } from './libs/types/types.js';
 
@@ -7,7 +6,7 @@ class Logger implements LoggerModule {
   private logger: LibraryLogger;
 
   public constructor() {
-    this.logger = pino(pretty.default());
+    this.logger = pino({ transport: { target: 'pino-pretty' } });
 
     this.logger.info('Logger is created…');
   }
