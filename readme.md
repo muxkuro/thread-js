@@ -173,7 +173,7 @@ For the full list of types check [Conventional Commits](https://github.com/conve
 
 Examples:
 
-- `feat: add dashboard screen tm-123`
+- `feat: add dashboard screen thjs-123`
 
 ### Branch Flow
 
@@ -197,8 +197,8 @@ We use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0) to 
 
 Examples:
 
-- `feat: add dashboard component tm-45`
-- `fix: update dashboard card size tm-212`
+- `feat: add dashboard component thjs-45`
+- `fix: update dashboard card size thjs-212`
 
 ## PS
 
