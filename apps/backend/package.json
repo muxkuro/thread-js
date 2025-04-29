@@ -2,8 +2,8 @@
   "name": "@thread-js/backend",
   "private": true,
   "engines": {
-    "node": "20.11.x",
-    "npm": "10.2.x"
+    "node": "22.15.x",
+    "npm": "10.9.x"
   },
   "type": "module",
   "scripts": {
