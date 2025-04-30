@@ -4,7 +4,7 @@ import { type ValueOf } from '~/libs/types/types.js';
 type StorageApi = {
   clear(): void;
   drop(key: ValueOf<typeof StorageKey>): void;
-  get<R = string>(key: ValueOf<typeof StorageKey>): R | null;
+  get<R = string>(key: ValueOf<typeof StorageKey>): null | R;
   has(key: ValueOf<typeof StorageKey>): boolean;
   set(key: ValueOf<typeof StorageKey>, value: string): void;
 };

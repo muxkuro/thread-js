@@ -24,7 +24,7 @@ class Storage implements StorageApi {
     this.#storage.removeItem(key as string);
   }
 
-  public get<R = string>(key: ValueOf<typeof StorageKey>): R | null {
+  public get<R = string>(key: ValueOf<typeof StorageKey>): null | R {
     return this.#storage.getItem(key as string) as R;
   }
 

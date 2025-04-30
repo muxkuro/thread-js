@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import js from '@eslint/js';
+import stylistic from '@stylistic/eslint-plugin';
 import ts from '@typescript-eslint/eslint-plugin';
 import tsParser from '@typescript-eslint/parser';
 import { resolve as tsResolver } from 'eslint-import-resolver-typescript';
@@ -15,22 +15,22 @@ import { fileURLToPath } from 'node:url';
 
 const JS_MAX_PARAMS_ALLOWED = 3;
 
-/** @typedef {import('eslint').Linter.FlatConfig} */
-let FlatConfig;
+/** @typedef {import('eslint').Linter.Config} */
+let Config;
 /** @typedef {import('eslint').Linter.ParserModule} */
 let ParserModule;
 
-/** @type {FlatConfig} */
+/** @type {Config} */
 const filesConfig = {
   files: ['**/*.{js,ts,tsx}']
 };
 
-/** @type {FlatConfig} */
+/** @type {Config} */
 const ignoresConfig = {
   ignores: ['apps', 'packages', 'dangerfile.ts']
 };
 
-/** @type {FlatConfig} */
+/** @type {Config} */
 const jsConfig = {
   languageOptions: {
     globals: globals.node,
@@ -78,7 +78,7 @@ const jsConfig = {
   }
 };
 
-/** @type {FlatConfig} */
+/** @type {Config} */
 const importConfig = {
   plugins: {
     import: importPlugin
@@ -107,18 +107,20 @@ const importConfig = {
   }
 };
 
-/** @type {FlatConfig} */
+/** @type {Config} */
 const sonarConfig = {
   plugins: {
     sonarjs
   },
   rules: {
     ...sonarjs.configs.recommended.rules,
-    'sonarjs/cognitive-complexity': ['error', 16]
+    'sonarjs/cognitive-complexity': ['error', 16],
+    'sonarjs/no-unused-vars': ['off'],
+    'sonarjs/void-use': ['off']
   }
 };
 
-/** @type {FlatConfig} */
+/** @type {Config} */
 const unicornConfig = {
   plugins: {
     unicorn
@@ -130,16 +132,20 @@ const unicornConfig = {
   }
 };
 
-/** @type {FlatConfig} */
+/** @type {Config} */
 const perfectionistConfig = {
   plugins: {
     perfectionist
   },
-  rules: perfectionist.configs['recommended-natural'].rules
+  rules: {
+    ...perfectionist.configs['recommended-natural'].rules,
+    'perfectionist/sort-classes': ['off']
+  }
 };
 
-/** @type {FlatConfig} */
+/** @type {Config} */
 const typescriptConfig = {
+  files: ['**/*.ts', '**/*.tsx'],
   languageOptions: {
     parser: /** @type {ParserModule} */ (tsParser),
     parserOptions: {
@@ -179,11 +185,47 @@ const typescriptConfig = {
         'checksVoidReturn': false
       }
     ],
+    '@typescript-eslint/no-unnecessary-type-parameters': ['off'],
     '@typescript-eslint/no-unused-vars': [
       'error',
       { 'argsIgnorePattern': '^_', 'ignoreRestSiblings': true }
     ],
-    '@typescript-eslint/padding-line-between-statements': [
+    '@typescript-eslint/restrict-plus-operands': ['off'],
+    '@typescript-eslint/restrict-template-expressions': [
+      'error',
+      { allowNumber: true }
+    ],
+    '@typescript-eslint/return-await': ['error', 'always']
+  }
+};
+
+/** @type {Config} */
+const jsdocConfig = {
+  files: ['eslint.config.js', 'lint-staged.config.js'],
+  plugins: {
+    jsdoc
+  },
+  rules: {
+    ...jsdoc.configs['flat/recommended-typescript-flavor-error'].rules,
+    'jsdoc/no-undefined-types': ['error'],
+    'jsdoc/require-returns-description': ['off']
+  }
+};
+
+/** @type {Config} */
+const explicitGenericsConfig = {
+  plugins: {
+    'require-explicit-generics': explicitGenerics
+  }
+};
+
+/** @type {Config} */
+const stylisticConfig = {
+  plugins: {
+    '@stylistic': stylistic
+  },
+  rules: {
+    '@stylistic/padding-line-between-statements': [
       'error',
       {
         blankLine: 'never',
@@ -200,37 +242,11 @@ const typescriptConfig = {
         next: ['return', 'block-like', 'throw', 'type'],
         prev: '*'
       }
-    ],
-    '@typescript-eslint/restrict-plus-operands': ['off'],
-    '@typescript-eslint/restrict-template-expressions': [
-      'error',
-      { allowNumber: true }
-    ],
-    '@typescript-eslint/return-await': ['error', 'always']
+    ]
   }
 };
 
-/** @type {FlatConfig} */
-const jsdocConfig = {
-  files: ['eslint.config.js', 'lint-staged.config.js'],
-  plugins: {
-    jsdoc
-  },
-  rules: {
-    ...jsdoc.configs['recommended-typescript-flavor-error'].rules,
-    'jsdoc/no-undefined-types': ['error'],
-    'jsdoc/require-returns-description': ['off']
-  }
-};
-
-/** @type {FlatConfig} */
-const explicitGenericsConfig = {
-  plugins: {
-    'require-explicit-generics': explicitGenerics
-  }
-};
-
-/** @type {FlatConfig[]} */
+/** @type {Config[]} */
 const overridesConfigs = [
   {
     files: [
@@ -260,7 +276,7 @@ const overridesConfigs = [
   }
 ];
 
-/** @type {FlatConfig[]} */
+/** @type {Config[]} */
 const config = [
   filesConfig,
   ignoresConfig,
@@ -272,6 +288,7 @@ const config = [
   typescriptConfig,
   jsdocConfig,
   explicitGenericsConfig,
+  stylisticConfig,
   ...overridesConfigs
 ];
 
