@@ -9,8 +9,8 @@ const config: KnipConfig = {
     },
     'apps/backend': {
       entry: ['src/index.ts', 'src/db/**/*.ts', 'knexfile.ts'],
-      ignoreBinaries: ['ts-paths-esm-loader'],
-      ignoreDependencies: ['ts-paths-esm-loader', 'pino-pretty']
+      ignoreDependencies: ['pino-pretty'],
+      ignoreUnresolved: ['jest-environment-node']
     },
     'apps/frontend': {
       entry: ['src/index.tsx']
