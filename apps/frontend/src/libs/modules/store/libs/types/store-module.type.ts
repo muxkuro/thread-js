@@ -1,20 +1,20 @@
 import {
+  type configureStore,
   type ThunkMiddleware,
   type Tuple,
-  type UnknownAction,
-  type configureStore
+  type UnknownAction
 } from '@reduxjs/toolkit';
 
 import { type authApi, type authReducer } from '~/modules/auth/auth.js';
 import { type storageApi } from '~/modules/storage/storage.js';
 
-type RootReducer = {
-  auth: ReturnType<typeof authReducer>;
-};
-
 type ExtraArguments = {
   authApi: typeof authApi;
   storageApi: typeof storageApi;
+};
+
+type RootReducer = {
+  auth: ReturnType<typeof authReducer>;
 };
 
 type StoreInstance = ReturnType<

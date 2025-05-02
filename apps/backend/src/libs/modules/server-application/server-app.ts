@@ -91,7 +91,7 @@ class ServerApp {
     return this;
   };
 
-  public start = async (): Promise<void> | never => {
+  public start = async (): never | Promise<void> => {
     try {
       await this.#app.listen({
         host: this.#config.ENV.APP.HOST,

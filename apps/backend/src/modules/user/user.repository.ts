@@ -13,7 +13,7 @@ class User
     super(userModel);
   }
 
-  public async getByEmail(email: string): Promise<TUser | null> {
+  public async getByEmail(email: string): Promise<null | TUser> {
     const user = await this.model
       .query()
       .modify('withoutPassword')
