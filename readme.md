@@ -4,8 +4,6 @@
 
 [**Thread**](git@github.com:BinaryStudioAcademy/thread-js.git) - this is [SPA](https://medium.com/NeotericEU/single-page-application-vs-multiple-page-application-2591588efe58 'SPA') with a ready-made architecture and structure, a connected basic technology stack and start-up functionality, designed for individual practice of students.
 
-The main theme of the project is a social network similar to Twitter.
-
 The main idea of the project is to onboard students with our vision of how a real project should look like from the inside, and give them the opportunity to individually explore how the architecture and structure of the project works, see its possible configurations, try to deeply understand someone else's code.
 
 ### Useful Links
@@ -20,7 +18,7 @@ The main idea of the project is to onboard students with our vision of how a rea
 
 ## Technologies
 
-The main frameworks and libraries used in the project are listed here. A complete list of technologies used for each part of the project is in the `package.json` files in the `client` and `server` folders.
+The main frameworks and libraries used in the project are listed here. A complete list of technologies used for each part of the project is in the `package.json` files in the `apps/frontend` and `apps/backend` folders.
 
 ### Global
 
@@ -202,20 +200,20 @@ Examples:
 
 ## PS
 
-The entire list of tasks can also be found on the [**Issues**](https://github.com/BinaryStudioAcademy/thread-js/issues) You can sort only usefull ones by `ready-for-student` label. These tasks are grouped with must-have(with current label) and optional.
+The entire list of tasks can be found on the [**Issues**](https://github.com/BinaryStudioAcademy/thread-js/issues) You can sort only usefull ones by `ready-for-student` label. These tasks are grouped with must-have(with current label) and optional.
 
 ## PAY ATTENTION!!!
 
-The task will be considered completed if it is fully completed, the feature works, and whether exists the correct design following the `Development Flow` from your side. So to pass criteria include The PullRequest with direction to the default branch, proper naming of the branch, commis, PR title, and filled description of what was done here. Let's look at its implementation and evaluate whether the logic was distributed correctly in the project. This will show how much you understand the architecture. We will also comment on the code...
+The task will be considered completed if it is fully completed, the feature works, and whether the correct design following the `Development Flow` was implemented by you. So to pass criteria you should include The Pull Request with direction to the default branch, proper naming of the branch, commits, PR title, and filled description of what was done there. Let's look at its implementation and evaluate whether the logic was distributed correctly in the project. This will show how much you understand the architecture. We will also comment on the code...
 
-The main result of the work can be determined by how deeply you were able to understand the project and understand it, and how far you have advanced in personal learning.
+The main result of the work can be determined by how deeply you were able to understand the project and how far you have advanced in personal learning.
 
 ## FAQ:
 
 1. What frameworks, libraries and their features can be used?
 
-Complete freedom of action, feel free, use whatever you want.
+Complete freedom of action, feel free to use whatever you want.
 
 2. Is it possible to change the database (add columns, tables)?
 
-It is possible, and in some tasks it is even necessary. To do this, you need to create new migrations. Existing migrations cannot be changed!!! Please do not forget it.
+It is possible, and in some tasks it is even necessary. To do this, you need to create new migrations. **Existing migrations cannot be changed!!!** Please do not forget it.
