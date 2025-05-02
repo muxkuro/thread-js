@@ -3,7 +3,7 @@ import { type ServerErrorResponse, type ValueOf } from '~/libs/types/types.js';
 
 import { type StorageApi } from '../storage/storage.js';
 import { type HTTPCode } from './libs/enums/enums.js';
-import { HTTPMethod, HttpHeader } from './libs/enums/enums.js';
+import { HttpHeader, HTTPMethod } from './libs/enums/enums.js';
 import { HTTPError } from './libs/exceptions/exceptions.js';
 import { getStringifiedQuery } from './libs/helpers/helpers.js';
 import { type HttpApi, type HttpOptions } from './libs/types/types.js';
@@ -88,7 +88,7 @@ class Http implements HttpApi {
   public async load<T>(
     url: string,
     options: Partial<HttpOptions> = {}
-  ): Promise<T> | never {
+  ): never | Promise<T> {
     const {
       contentType,
       hasAuth = true,

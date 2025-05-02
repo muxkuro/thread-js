@@ -20,8 +20,8 @@ import {
 import { API_V1_VERSION_PREFIX } from '../../libs/constants/constants.js';
 import { buildApp } from '../../libs/modules/app/app.js';
 import {
-  KNEX_SELECT_ONE_RECORD,
-  getCrudHandlers
+  getCrudHandlers,
+  KNEX_SELECT_ONE_RECORD
 } from '../../libs/modules/database/database.js';
 import { VALIDATION_RULE_DELTA } from '../../libs/modules/database/libs/constants/constants.js';
 import { TEST_USERS_CREDENTIALS } from '../user/user.js';

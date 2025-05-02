@@ -2,7 +2,7 @@ import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { pathsToModuleNameMapper } from 'ts-jest';
 
-import tsconfigJson from './tsconfig.json' assert { type: 'json' };
+import tsconfigJson from './tsconfig.json' with { type: 'json' };
 
 const sourcePath = join(fileURLToPath(import.meta.url), '../');
 

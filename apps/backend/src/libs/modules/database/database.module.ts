@@ -1,5 +1,5 @@
 import LibraryKnex from 'knex';
-import { Model, knexSnakeCaseMappers } from 'objection';
+import { knexSnakeCaseMappers, Model } from 'objection';
 
 import { AppEnvironment } from '~/libs/enums/enums.js';
 import { type ValueOf } from '~/libs/types/types.js';
